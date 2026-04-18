@@ -228,14 +228,14 @@ function About() {
           <div ref={notionRef} className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
             {notionCards.map(card => (
               <a key={card.label} href={card.href} target="_blank" rel="noopener noreferrer"
-                className="group flex flex-col gap-2 p-4 rounded-xl border border-[var(--border)] opacity-0 transition-shadow hover:shadow-md"
+                className="group relative flex flex-col gap-2 p-4 rounded-xl border border-[var(--border)] opacity-0 transition-shadow hover:shadow-md"
                 style={{ background: 'var(--card)' }}>
+                {/* Notion icon top-right */}
+                <div className="absolute top-3 right-3 w-6 h-6 rounded-md flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
+                  style={{ background: '#000' }}>N</div>
                 <span className="text-2xl">{card.emoji}</span>
-                <p className="text-sm font-semibold leading-snug" style={{ color: 'var(--foreground)' }}>{card.label}</p>
+                <p className="text-sm font-semibold leading-snug pr-6" style={{ color: 'var(--foreground)' }}>{card.label}</p>
                 <p className="text-xs leading-relaxed" style={{ color: 'var(--muted)' }}>{card.sub}</p>
-                <span className="mt-auto flex items-center gap-1 text-[10px] font-mono opacity-30 group-hover:opacity-60 transition-opacity" style={{ color: 'var(--foreground)' }}>
-                  Notion <ExternalLink size={9} />
-                </span>
               </a>
             ))}
           </div>
@@ -290,15 +290,17 @@ function Community() {
             <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
             {t('badge')}
           </div>
-          <h2 className="text-4xl lg:text-5xl font-black leading-tight tracking-tight mb-6"
-            style={{ color: 'var(--foreground)' }}>{t('heading')}</h2>
+          <div className="flex items-center gap-4 mb-6">
+            <h2 className="text-4xl lg:text-5xl font-black leading-tight tracking-tight"
+              style={{ color: 'var(--foreground)' }}>{t('heading')}</h2>
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#5865F2]/30 flex-shrink-0"
+              style={{ background: '#5865F2' + '18' }}>
+              <FaDiscord size={16} style={{ color: '#5865F2' }} />
+              <span className="text-xs font-semibold" style={{ color: '#5865F2' }}>Discord</span>
+            </div>
+          </div>
           <p className="text-base leading-[1.9] mb-4" style={{ color: 'var(--muted)' }}>{t('desc1')}</p>
           <p className="text-base leading-[1.9]" style={{ color: 'var(--muted)' }}>{t('desc2')}</p>
-          <div className="mt-6 flex items-center gap-2 px-4 py-2.5 rounded-xl w-fit border border-[#5865F2]/30"
-            style={{ background: '#5865F2' + '18' }}>
-            <FaDiscord size={18} style={{ color: '#5865F2' }} />
-            <span className="text-sm font-semibold" style={{ color: '#5865F2' }}>Discord コミュニティ</span>
-          </div>
           <a href="https://notion.so" target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 mt-10 px-6 py-3 rounded-full text-sm font-bold transition-opacity hover:opacity-80"
             style={{ background: 'var(--foreground)', color: 'var(--background)' }}>
