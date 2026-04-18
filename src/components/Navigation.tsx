@@ -65,10 +65,10 @@ export function Navigation() {
             ref={logoRef}
             href="#"
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-            className="font-bold text-lg tracking-tight opacity-0"
-            style={{ color: 'var(--foreground)' }}
+            className="opacity-0 flex items-center"
           >
-            S.M
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/logo.png" alt="Shingo Matsushita" className="h-9 w-9 rounded-full object-cover" />
           </a>
 
           <div className="flex items-center gap-8">
