@@ -117,7 +117,7 @@ function Hero() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-0 items-center">
         <div>
           <p className="text-xs font-mono tracking-[0.2em] uppercase mb-8 opacity-50">{t('basedIn')}</p>
-          <h1 ref={headRef} className="text-[clamp(3.2rem,8vw,7.5rem)] font-black leading-[0.95] tracking-tight mb-8"
+          <h1 ref={headRef} className="text-[clamp(3.2rem,7vw,5.5rem)] font-black leading-[0.95] tracking-tight mb-8"
             style={{ color: 'var(--foreground)', perspective: '800px' }}>
             {`Shingo\nMatsushita`}
           </h1>
