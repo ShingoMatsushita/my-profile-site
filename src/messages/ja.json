@@ -3,6 +3,7 @@
     "about": "About",
     "work": "Work",
     "blog": "Blog",
+    "community": "Community",
     "contact": "Contact"
   },
   "Hero": {
@@ -45,6 +46,18 @@
       { "title": "Next.js 14 で Core Web Vitals を改善する",  "desc": "App RouterとServer Componentsを活用してLCP・CLS・INPを劇的に改善した実例を紹介。" },
       { "title": "実務で使えるTypeScriptデザインパターン",     "desc": "Result型・Builder・Discriminated Unionなど、大規模アプリで活きるパターンをまとめました。" }
     ]
+  },
+  "Community": {
+    "sectionLabel": "Community",
+    "heading": "AIシドニー会",
+    "desc1": "AI・テクノロジーに関心を持つ仲間が集まるオンラインコミュニティです。",
+    "desc2": "最新のAIトレンド、開発tips、キャリアについて一緒に語りましょう。初心者から上級者まで歓迎。",
+    "notionLabel": "コミュニティサイト（Notion）",
+    "notionSub": "メンバー向け情報はこちら",
+    "siteLabel": "コミュニティサイト（準備中）",
+    "siteSub": "専用サイトを近日公開予定",
+    "joinButton": "コミュニティに参加する",
+    "badge": "オープンコミュニティ"
   },
   "Contact": {
     "sectionLabel": "Contact",

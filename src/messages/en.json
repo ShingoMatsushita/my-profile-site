@@ -3,6 +3,7 @@
     "about": "About",
     "work": "Work",
     "blog": "Blog",
+    "community": "Community",
     "contact": "Contact"
   },
   "Hero": {
@@ -45,6 +46,18 @@
       { "title": "Improving Core Web Vitals with Next.js 14",         "desc": "A real-world case of dramatically improving LCP, CLS, and INP with App Router and Server Components." },
       { "title": "Practical TypeScript Design Patterns",              "desc": "Patterns that shine in large-scale apps: Result type, Builder, Discriminated Union, and more." }
     ]
+  },
+  "Community": {
+    "sectionLabel": "Community",
+    "heading": "AI Sydney Club",
+    "desc1": "An online community for those passionate about AI and technology.",
+    "desc2": "Let's discuss the latest AI trends, dev tips, and career paths together. Everyone from beginners to experts is welcome.",
+    "notionLabel": "Community Site (Notion)",
+    "notionSub": "Member resources & updates",
+    "siteLabel": "Community Site (Coming Soon)",
+    "siteSub": "Dedicated site launching soon",
+    "joinButton": "Join the Community",
+    "badge": "Open Community"
   },
   "Contact": {
     "sectionLabel": "Contact",

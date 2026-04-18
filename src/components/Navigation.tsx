@@ -12,6 +12,7 @@ const navItems = [
   { href: '#about',     label: 'About' },
   { href: '#portfolio', label: 'Work' },
   { href: '#blog',      label: 'Blog' },
+  { href: '#community', label: 'Community' },
   { href: '#contact',   label: 'Contact' },
 ];
 

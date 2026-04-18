@@ -2,7 +2,7 @@ import { getGithubRepos } from '@/lib/github';
 import { getNotePosts } from '@/lib/note';
 import { PortfolioSection } from '@/components/PortfolioSection';
 import { BlogSection } from '@/components/BlogSection';
-import { Hero, Marquee, About, Contact, Footer } from '@/components/HomeClient';
+import { Hero, Marquee, About, Community, Contact, Footer } from '@/components/HomeClient';
 
 export default async function Home() {
   const [repos, notePosts] = await Promise.all([
@@ -17,6 +17,7 @@ export default async function Home() {
       <About />
       <PortfolioSection repos={repos} />
       <BlogSection posts={notePosts} />
+      <Community />
       <Contact />
       <Footer />
     </>
