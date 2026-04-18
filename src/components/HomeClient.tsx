@@ -119,7 +119,7 @@ function Hero() {
           <p className="text-xs font-mono tracking-[0.2em] uppercase mb-8 opacity-50">{t('basedIn')}</p>
           <h1 ref={headRef} className="text-[clamp(3.2rem,7vw,5.5rem)] font-black leading-[0.95] tracking-tight mb-8"
             style={{ color: 'var(--foreground)', perspective: '800px' }}>
-            {`Shingo\nMatsushita`}
+            {t('name')}
           </h1>
           <p ref={subRef} className="text-lg leading-relaxed max-w-md opacity-0" style={{ color: 'var(--muted)' }}>
             {t('sub1')}<br />{t('sub2')}
