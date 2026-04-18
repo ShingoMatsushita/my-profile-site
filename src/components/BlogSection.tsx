@@ -66,11 +66,11 @@ export function BlogSection({ posts }: { posts: NotePost[] }) {
 
       {/* mobile: horizontal scroll */}
       <div className="md:hidden -mx-6 px-6">
-        <div ref={mobileCardsRef} className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4"
+        <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4"
           style={{ scrollbarWidth: 'none' }}>
           {posts.map((post, i) => (
-            <div key={post.link} className="snap-start flex-shrink-0 w-[75vw] max-w-[300px]">
-              <NoteCard post={post} readMore={t('readMore')} index={i} />
+            <div key={post.link} className="snap-start flex-shrink-0 w-[75vw] max-w-[300px]" style={{ opacity: 1 }}>
+              <NoteCard post={post} readMore={t('readMore')} index={i} mobile />
             </div>
           ))}
         </div>
@@ -85,12 +85,12 @@ export function BlogSection({ posts }: { posts: NotePost[] }) {
   );
 }
 
-function NoteCard({ post, readMore, index }: { post: NotePost; readMore: string; index: number }) {
+function NoteCard({ post, readMore, index, mobile }: { post: NotePost; readMore: string; index: number; mobile?: boolean }) {
   const THUMB_BG = ['#fde68a', '#a5f3fc', '#bbf7d0', '#fecaca', '#e9d5ff', '#fed7aa'];
 
   return (
     <a href={post.link} target="_blank" rel="noopener noreferrer"
-      className="group block rounded-2xl border border-[var(--border)] overflow-hidden opacity-0 transition-shadow hover:shadow-xl"
+      className={`group block rounded-2xl border border-[var(--border)] overflow-hidden transition-shadow hover:shadow-xl${mobile ? '' : ' opacity-0'}`}
       style={{ background: 'var(--card)' }}>
       {/* Cover */}
       <div className="relative w-full h-44 overflow-hidden"

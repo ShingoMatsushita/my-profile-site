@@ -75,13 +75,13 @@ export function PortfolioSection({ repos }: { repos: GithubRepo[] }) {
         </a>
       </div>
 
-      {/* mobile: horizontal scroll / md+: grid */}
+      {/* mobile: horizontal scroll */}
       <div className="md:hidden -mx-6 px-6">
-        <div ref={mobileGridRef} className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4"
+        <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4"
           style={{ scrollbarWidth: 'none' }}>
           {repos.map(repo => (
-            <div key={repo.id} className="snap-start flex-shrink-0 w-[75vw] max-w-[300px]">
-              <RepoCard repo={repo} viewLabel={t('viewProject')} />
+            <div key={repo.id} className="snap-start flex-shrink-0 w-[75vw] max-w-[300px]" style={{ opacity: 1 }}>
+              <RepoCard repo={repo} viewLabel={t('viewProject')} mobile />
             </div>
           ))}
         </div>
@@ -95,7 +95,7 @@ export function PortfolioSection({ repos }: { repos: GithubRepo[] }) {
   );
 }
 
-function RepoCard({ repo, viewLabel }: { repo: GithubRepo; viewLabel: string }) {
+function RepoCard({ repo, viewLabel, mobile }: { repo: GithubRepo; viewLabel: string; mobile?: boolean }) {
   const [hovered, setHovered] = useState(false);
   const cardRef = useRef<HTMLAnchorElement>(null);
 
@@ -108,7 +108,7 @@ function RepoCard({ repo, viewLabel }: { repo: GithubRepo; viewLabel: string }) 
 
   return (
     <a ref={cardRef} href={repo.html_url} target="_blank" rel="noopener noreferrer"
-      className="group flex flex-col rounded-2xl border border-[var(--border)] p-6 opacity-0 transition-shadow hover:shadow-xl"
+      className={`group flex flex-col rounded-2xl border border-[var(--border)] p-6 transition-shadow hover:shadow-xl${mobile ? '' : ' opacity-0'}`}
       style={{ background: 'var(--card)' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}>
