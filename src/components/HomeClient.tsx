@@ -20,18 +20,19 @@ import { forwardRef } from 'react';
 gsap.registerPlugin(ScrollTrigger);
 
 /* ─── SOCIAL LINKS ───────────────────────────────────────────────── */
-const SOCIAL_LINKS = [
+type SocialLink = { label: string; icon: React.ComponentType<{ size?: number }>; href: string; val: string; color: string; bg: string; external?: boolean };
+const SOCIAL_LINKS: SocialLink[] = [
   { label: 'X',         icon: FaXTwitter,  href: 'https://x.com/matsu_ai_user?s=21&t=IAVf4M8dh9u9UWgrv4KUlA', val: '@matsu_ai_user', color: '#000000', bg: '#000000' },
   { label: 'note',      icon: IconNote,    href: 'https://note.com/dapper_ivy8264',      val: 'dapper_ivy8264',      color: '#41C9B4', bg: '#41C9B4' },
   { label: 'YouTube',   icon: FaYoutube,   href: 'https://youtube.com',                  val: '@yourchannel',        color: '#FF0000', bg: '#FF0000' },
   { label: 'TikTok',    icon: FaTiktok,    href: 'https://tiktok.com',                   val: '@yourusername',       color: '#010101', bg: '#010101' },
   { label: 'Instagram', icon: FaInstagram, href: 'https://www.instagram.com/matsu__405?igsh=cDVob3VwNDdvdGh0&utm_source=qr', val: '@matsu__405', color: '#E1306C', bg: '#E1306C' },
   { label: 'LinkedIn',  icon: FaLinkedin,  href: 'https://www.linkedin.com/in/%E6%85%8E%E5%90%BE-%E6%9D%BE%E4%B8%8B-57929b330?utm_source=share_via&utm_content=profile&utm_medium=member_ios', val: 'Shingo Matsushita', color: '#0A66C2', bg: '#0A66C2' },
-  { label: 'GitHub',    icon: FaGithub,    href: 'https://github.com/ShingoMatsushita', val: 'ShingoMatsushita',   color: '#181717', bg: '#181717' },
-  { label: 'Gmail',     icon: SiGmail,     href: 'mailto:hello@example.com',             val: 'hello@example.com',  color: '#EA4335', bg: '#EA4335', external: false },
+  { label: 'GitHub',    icon: FaGithub,    href: 'https://github.com/ShingoMatsushita', val: 'ShingoMatsushita',    color: '#181717', bg: '#181717' },
+  { label: 'Gmail',     icon: SiGmail,     href: 'mailto:hello@example.com',             val: 'hello@example.com',   color: '#EA4335', bg: '#EA4335', external: false },
   { label: 'LINE',      icon: FaLine,      href: 'https://line.me/ti/p/iAxEToZ8Qp',     val: 'LINE',                color: '#06C755', bg: '#06C755' },
   { label: 'Facebook',  icon: FaFacebook,  href: 'https://www.facebook.com/share/17Wg5hg1XG/?mibextid=wwXIfr', val: 'Facebook', color: '#1877F2', bg: '#1877F2' },
-] as const;
+];
 
 /* ─── STATIC DATA ──────────────────────────────────────────────── */
 const skills = [
@@ -317,7 +318,7 @@ function Community() {
 /* ─── CONTACT SOCIAL ROW ─────────────────────────────────────────── */
 function ContactSocialRow({ Icon, label, val, href, color, external }: {
   Icon: React.ComponentType<{ size?: number }>;
-  label: string; val: string; href: string; color: string; external: boolean;
+  label: string; val: string; href: string; color: string; external?: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
   return (
