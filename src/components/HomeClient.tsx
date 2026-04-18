@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowUpRight, Send, ExternalLink, Clock } from 'lucide-react';
-import { FaXTwitter, FaYoutube, FaTiktok, FaInstagram, FaLinkedin, FaGithub, FaLine, FaFacebook, FaDiscord } from 'react-icons/fa6';
+import { FaXTwitter, FaYoutube, FaTiktok, FaInstagram, FaLinkedin, FaLine, FaFacebook, FaDiscord } from 'react-icons/fa6';
+import { SiNotion } from 'react-icons/si';
 
 
 /* ─── NOTE ICON (公式SVGなし・カスタム) ──────────────────────────── */
@@ -23,15 +24,13 @@ gsap.registerPlugin(ScrollTrigger);
 type SocialLink = { label: string; icon: React.ComponentType<{ size?: number }>; href: string; val: string; color: string; bg: string; external?: boolean };
 const SOCIAL_LINKS: SocialLink[] = [
   { label: 'X',         icon: FaXTwitter,  href: 'https://x.com/matsu_ai_user?s=21&t=IAVf4M8dh9u9UWgrv4KUlA', val: '@matsu_ai_user', color: '#000000', bg: '#000000' },
-  { label: 'note',      icon: IconNote,    href: 'https://note.com/dapper_ivy8264',      val: 'dapper_ivy8264',      color: '#41C9B4', bg: '#41C9B4' },
-  { label: 'YouTube',   icon: FaYoutube,   href: 'https://youtube.com',                  val: '@yourchannel',        color: '#FF0000', bg: '#FF0000' },
-  { label: 'TikTok',    icon: FaTiktok,    href: 'https://tiktok.com',                   val: '@yourusername',       color: '#010101', bg: '#010101' },
-  { label: 'Instagram', icon: FaInstagram, href: 'https://www.instagram.com/matsu__405?igsh=cDVob3VwNDdvdGh0&utm_source=qr', val: '@matsu__405', color: '#E1306C', bg: '#E1306C' },
   { label: 'LinkedIn',  icon: FaLinkedin,  href: 'https://www.linkedin.com/in/%E6%85%8E%E5%90%BE-%E6%9D%BE%E4%B8%8B-57929b330?utm_source=share_via&utm_content=profile&utm_medium=member_ios', val: 'Shingo Matsushita', color: '#0A66C2', bg: '#0A66C2' },
-  { label: 'GitHub',    icon: FaGithub,    href: 'https://github.com/ShingoMatsushita', val: 'ShingoMatsushita',    color: '#181717', bg: '#181717' },
-
+  { label: 'Facebook',  icon: FaFacebook,  href: 'https://www.facebook.com/share/17Wg5hg1XG/?mibextid=wwXIfr', val: 'Facebook',        color: '#1877F2', bg: '#1877F2' },
+  { label: 'note',      icon: IconNote,    href: 'https://note.com/dapper_ivy8264',      val: 'dapper_ivy8264',      color: '#41C9B4', bg: '#41C9B4' },
+  { label: 'Instagram', icon: FaInstagram, href: 'https://www.instagram.com/matsu__405?igsh=cDVob3VwNDdvdGh0&utm_source=qr', val: '@matsu__405', color: '#E1306C', bg: '#E1306C' },
+  { label: 'TikTok',    icon: FaTiktok,    href: 'https://tiktok.com',                   val: '@yourusername',       color: '#010101', bg: '#010101' },
+  { label: 'YouTube',   icon: FaYoutube,   href: 'https://youtube.com',                  val: '@yourchannel',        color: '#FF0000', bg: '#FF0000' },
   { label: 'LINE',      icon: FaLine,      href: 'https://line.me/ti/p/iAxEToZ8Qp',     val: 'LINE',                color: '#06C755', bg: '#06C755' },
-  { label: 'Facebook',  icon: FaFacebook,  href: 'https://www.facebook.com/share/17Wg5hg1XG/?mibextid=wwXIfr', val: 'Facebook', color: '#1877F2', bg: '#1877F2' },
 ];
 
 /* ─── STATIC DATA ──────────────────────────────────────────────── */
@@ -231,8 +230,9 @@ function About() {
                 className="group relative flex flex-col gap-2 p-4 rounded-xl border border-[var(--border)] opacity-0 transition-shadow hover:shadow-md"
                 style={{ background: 'var(--card)' }}>
                 {/* Notion icon top-right */}
-                <div className="absolute top-3 right-3 w-6 h-6 rounded-md flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
-                  style={{ background: '#000' }}>N</div>
+                <div className="absolute top-3 right-3 w-6 h-6 flex items-center justify-center">
+                  <SiNotion size={18} style={{ color: 'var(--foreground)' }} />
+                </div>
                 <span className="text-2xl">{card.emoji}</span>
                 <p className="text-sm font-semibold leading-snug pr-6" style={{ color: 'var(--foreground)' }}>{card.label}</p>
                 <p className="text-xs leading-relaxed" style={{ color: 'var(--muted)' }}>{card.sub}</p>
@@ -314,8 +314,10 @@ function Community() {
           <a href="https://notion.so" target="_blank" rel="noopener noreferrer"
             className="group flex items-center gap-5 p-5 rounded-2xl border border-[var(--border)] transition-shadow hover:shadow-lg"
             style={{ background: 'var(--card)' }}>
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 text-white text-xl font-bold"
-              style={{ background: '#000' }}>N</div>
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 border border-[var(--border)]"
+              style={{ background: 'var(--card)' }}>
+              <SiNotion size={22} style={{ color: 'var(--foreground)' }} />
+            </div>
             <div className="flex-1 min-w-0">
               <p className="font-semibold text-sm mb-0.5" style={{ color: 'var(--foreground)' }}>{t('notionLabel')}</p>
               <p className="text-xs" style={{ color: 'var(--muted)' }}>{t('notionSub')}</p>
