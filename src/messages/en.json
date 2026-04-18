@@ -1,0 +1,66 @@
+{
+  "Navigation": {
+    "about": "About",
+    "work": "Work",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "Hero": {
+    "basedIn": "Based in Japan",
+    "sub1": "Web Developer & Designer.",
+    "sub2": "Building beautiful, fast, and intuitive digital experiences.",
+    "cta": "Hire me",
+    "scroll": "Scroll",
+    "availableForWork": "Available for work",
+    "copyright": "© 2024 — Developer"
+  },
+  "About": {
+    "heading": "About Me",
+    "bio1": "A Web Developer & Designer based in Japan, passionate about crafting interfaces that feel great to use.",
+    "bio2": "Primarily focused on front-end development, I cover the full stack from back-end to design. I specialize in animation with GSAP and Framer Motion, building products that balance performance and UX."
+  },
+  "Timeline": {
+    "items": [
+      { "year": "2024–", "role": "Freelance Developer", "place": "Remote",               "desc": "Working as a freelancer centered on web development, delivering high-quality products with a modern tech stack." },
+      { "year": "2023",  "role": "Web Developer",       "place": "Tokyo",                "desc": "Worked on front-end development at a startup, responsible for designing and implementing SPAs with React/Next.js." },
+      { "year": "2020",  "role": "University Graduate", "place": "Dept. of IT Engineering", "desc": "Majored in software development, algorithms, and database design." }
+    ]
+  },
+  "Portfolio": {
+    "sectionLabel": "Work",
+    "heading": "Selected Projects",
+    "viewProject": "View Project",
+    "projects": [
+      { "desc": "An interactive portfolio site built with GSAP. ScrollTrigger creates an immersive browsing experience." },
+      { "desc": "A real-time synchronized task management app designed to dramatically improve team workflow efficiency." },
+      { "desc": "An e-commerce site integrated with Stripe. Performance optimization achieved green scores on all Core Web Vitals." }
+    ]
+  },
+  "Blog": {
+    "sectionLabel": "Blog",
+    "heading": "Latest Writing",
+    "readMore": "Read more",
+    "posts": [
+      { "title": "Immersive Scroll Animations with GSAP",             "desc": "How to bring cinematic experiences to your portfolio site using ScrollTrigger." },
+      { "title": "Improving Core Web Vitals with Next.js 14",         "desc": "A real-world case of dramatically improving LCP, CLS, and INP with App Router and Server Components." },
+      { "title": "Practical TypeScript Design Patterns",              "desc": "Patterns that shine in large-scale apps: Result type, Builder, Discriminated Union, and more." }
+    ]
+  },
+  "Contact": {
+    "sectionLabel": "Contact",
+    "bigText": "Let's talk.",
+    "intro1": "Whether it's a new project or just a hello —",
+    "intro2": "feel free to reach out anytime.",
+    "namePlaceholder": "Your Name",
+    "emailPlaceholder": "Email Address",
+    "messagePlaceholder": "Message",
+    "send": "Send",
+    "sending": "Sending…",
+    "successTitle": "Message Sent!",
+    "successBody": "I'll get back to you soon."
+  },
+  "Footer": {
+    "copyright": "© 2024 Shingo Matsushita",
+    "builtWith": "Built with Next.js & GSAP"
+  }
+}
