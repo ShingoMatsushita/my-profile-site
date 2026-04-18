@@ -75,7 +75,9 @@
     "send": "Send",
     "sending": "Sending…",
     "successTitle": "Message Sent!",
-    "successBody": "I'll get back to you soon."
+    "successBody": "I'll get back to you soon.",
+    "orEmail": "Or reach out directly via email",
+    "emailAddress": "hello@example.com"
   },
   "Footer": {
     "copyright": "© 2024 Shingo Matsushita",

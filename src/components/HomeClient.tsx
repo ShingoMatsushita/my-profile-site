@@ -5,7 +5,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowUpRight, Send, ExternalLink, Clock } from 'lucide-react';
 import { FaXTwitter, FaYoutube, FaTiktok, FaInstagram, FaLinkedin, FaGithub, FaLine, FaFacebook } from 'react-icons/fa6';
-import { SiGmail } from 'react-icons/si';
+
 
 /* ─── NOTE ICON (公式SVGなし・カスタム) ──────────────────────────── */
 const IconNote = () => (
@@ -29,7 +29,7 @@ const SOCIAL_LINKS: SocialLink[] = [
   { label: 'Instagram', icon: FaInstagram, href: 'https://www.instagram.com/matsu__405?igsh=cDVob3VwNDdvdGh0&utm_source=qr', val: '@matsu__405', color: '#E1306C', bg: '#E1306C' },
   { label: 'LinkedIn',  icon: FaLinkedin,  href: 'https://www.linkedin.com/in/%E6%85%8E%E5%90%BE-%E6%9D%BE%E4%B8%8B-57929b330?utm_source=share_via&utm_content=profile&utm_medium=member_ios', val: 'Shingo Matsushita', color: '#0A66C2', bg: '#0A66C2' },
   { label: 'GitHub',    icon: FaGithub,    href: 'https://github.com/ShingoMatsushita', val: 'ShingoMatsushita',    color: '#181717', bg: '#181717' },
-  { label: 'Gmail',     icon: SiGmail,     href: 'mailto:hello@example.com',             val: 'hello@example.com',   color: '#EA4335', bg: '#EA4335', external: false },
+
   { label: 'LINE',      icon: FaLine,      href: 'https://line.me/ti/p/iAxEToZ8Qp',     val: 'LINE',                color: '#06C755', bg: '#06C755' },
   { label: 'Facebook',  icon: FaFacebook,  href: 'https://www.facebook.com/share/17Wg5hg1XG/?mibextid=wwXIfr', val: 'Facebook', color: '#1877F2', bg: '#1877F2' },
 ];
@@ -428,6 +428,14 @@ function Contact() {
                   style={{ background: 'var(--foreground)', color: 'var(--background)' }}>
                   {status === 'sending' ? t('sending') : <><Send size={14} />{t('send')}</>}
                 </button>
+              </div>
+              <div className="opacity-0 text-center">
+                <p className="text-xs" style={{ color: 'var(--muted)' }}>
+                  {t('orEmail')}{' '}
+                  <a href={`mailto:${t('emailAddress')}`} className="underline underline-offset-2 hover:opacity-70 transition-opacity" style={{ color: 'var(--foreground)' }}>
+                    {t('emailAddress')}
+                  </a>
+                </p>
               </div>
             </div>
           </form>

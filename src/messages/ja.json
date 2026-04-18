@@ -75,7 +75,9 @@
     "send": "送信する",
     "sending": "送信中…",
     "successTitle": "送信完了！",
-    "successBody": "近日中にご返信します。"
+    "successBody": "近日中にご返信します。",
+    "orEmail": "または直接メールで",
+    "emailAddress": "hello@example.com"
   },
   "Footer": {
     "copyright": "© 2024 Shingo Matsushita",
