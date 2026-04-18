@@ -105,15 +105,20 @@ function RepoCard({ repo, viewLabel, mobile }: { repo: GithubRepo; viewLabel: st
   }, [hovered]);
 
   const langColor = repo.language ? (LANG_COLORS[repo.language] ?? '#888') : null;
+  const ogImage = `https://opengraph.githubassets.com/1/ShingoMatsushita/${repo.name}`;
 
   return (
     <a ref={cardRef} href={repo.html_url} target="_blank" rel="noopener noreferrer"
-      className={`group flex flex-col rounded-2xl border border-[var(--border)] p-6 transition-shadow hover:shadow-xl${mobile ? '' : ' opacity-0'}`}
+      className={`group flex flex-col rounded-2xl border border-[var(--border)] overflow-hidden transition-shadow hover:shadow-xl${mobile ? '' : ' opacity-0'}`}
       style={{ background: 'var(--card)' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}>
+      {/* OGP image */}
+      <div className="relative w-full h-36 overflow-hidden bg-zinc-100 dark:bg-zinc-800 flex-shrink-0">
+        <Image src={ogImage} alt={repo.name} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+      </div>
       {/* Header */}
-      <div className="flex items-start justify-between mb-3">
+      <div className="flex items-start justify-between mb-3 px-6 pt-5">
         <h3 className="font-bold text-base leading-snug pr-2 group-hover:opacity-70 transition-opacity"
           style={{ color: 'var(--foreground)' }}>
           {repo.name}
@@ -123,14 +128,14 @@ function RepoCard({ repo, viewLabel, mobile }: { repo: GithubRepo; viewLabel: st
       </div>
 
       {/* Description */}
-      <p className="text-sm leading-relaxed flex-1 mb-4"
+      <p className="text-sm leading-relaxed flex-1 mb-4 px-6"
         style={{ color: 'var(--muted)' }}>
         {repo.description ?? '—'}
       </p>
 
       {/* Topics */}
       {repo.topics.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 mb-4">
+        <div className="flex flex-wrap gap-1.5 mb-4 px-6">
           {repo.topics.slice(0, 3).map(topic => (
             <span key={topic} className="px-2 py-0.5 text-[10px] font-mono rounded-full border border-[var(--border)]"
               style={{ color: 'var(--muted)' }}>
@@ -141,7 +146,7 @@ function RepoCard({ repo, viewLabel, mobile }: { repo: GithubRepo; viewLabel: st
       )}
 
       {/* Footer */}
-      <div className="flex items-center gap-4 text-xs font-mono" style={{ color: 'var(--muted)' }}>
+      <div className="flex items-center gap-4 text-xs font-mono px-6 pb-6" style={{ color: 'var(--muted)' }}>
         {langColor && (
           <span className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: langColor }} />

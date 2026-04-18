@@ -15,6 +15,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'd2l930y2yx77uc.cloudfront.net',
       },
+      {
+        protocol: 'https',
+        hostname: 'opengraph.githubassets.com',
+      },
     ],
   },
 };
