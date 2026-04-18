@@ -24,9 +24,10 @@ SectionLabel.displayName = 'SectionLabel';
 
 export function BlogSection({ posts }: { posts: NotePost[] }) {
   const t          = useTranslations('Blog');
-  const sectionRef = useRef<HTMLElement>(null);
-  const labelRef   = useRef<HTMLDivElement>(null);
-  const cardsRef   = useRef<HTMLDivElement>(null);
+  const sectionRef    = useRef<HTMLElement>(null);
+  const labelRef      = useRef<HTMLDivElement>(null);
+  const cardsRef      = useRef<HTMLDivElement>(null);
+  const mobileCardsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -35,7 +36,8 @@ export function BlogSection({ posts }: { posts: NotePost[] }) {
         start: 'top 80%',
         onEnter: () => {
           gsap.fromTo(labelRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7 });
-          gsap.fromTo(cardsRef.current?.children ?? [],
+          const targets = [...(cardsRef.current?.children ?? []), ...(mobileCardsRef.current?.children ?? [])];
+          gsap.fromTo(targets,
             { opacity: 0, y: 50 },
             { opacity: 1, y: 0, duration: 0.8, stagger: 0.12, ease: 'power3.out', delay: 0.2 }
           );
@@ -62,7 +64,19 @@ export function BlogSection({ posts }: { posts: NotePost[] }) {
         </a>
       </div>
 
-      <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* mobile: horizontal scroll */}
+      <div className="md:hidden -mx-6 px-6">
+        <div ref={mobileCardsRef} className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4"
+          style={{ scrollbarWidth: 'none' }}>
+          {posts.map((post, i) => (
+            <div key={post.link} className="snap-start flex-shrink-0 w-[75vw] max-w-[300px]">
+              <NoteCard post={post} readMore={t('readMore')} index={i} />
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* md+: grid */}
+      <div ref={cardsRef} className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {posts.map((post, i) => (
           <NoteCard key={post.link} post={post} readMore={t('readMore')} index={i} />
         ))}

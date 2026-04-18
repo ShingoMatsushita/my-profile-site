@@ -35,10 +35,11 @@ const LANG_COLORS: Record<string, string> = {
 
 export function PortfolioSection({ repos }: { repos: GithubRepo[] }) {
   const t          = useTranslations('Portfolio');
-  const sectionRef = useRef<HTMLElement>(null);
-  const labelRef   = useRef<HTMLDivElement>(null);
-  const headRef    = useRef<HTMLHeadingElement>(null);
-  const gridRef    = useRef<HTMLDivElement>(null);
+  const sectionRef    = useRef<HTMLElement>(null);
+  const labelRef      = useRef<HTMLDivElement>(null);
+  const headRef       = useRef<HTMLHeadingElement>(null);
+  const gridRef       = useRef<HTMLDivElement>(null);
+  const mobileGridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -48,7 +49,8 @@ export function PortfolioSection({ repos }: { repos: GithubRepo[] }) {
         onEnter: () => {
           gsap.fromTo(labelRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7 });
           gsap.fromTo(headRef.current,  { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.9, delay: 0.1 });
-          gsap.fromTo(gridRef.current?.children ?? [],
+          const targets = [...(gridRef.current?.children ?? []), ...(mobileGridRef.current?.children ?? [])];
+          gsap.fromTo(targets,
             { opacity: 0, y: 40, scale: 0.97 },
             { opacity: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.1, ease: 'power3.out', delay: 0.2 }
           );
@@ -73,7 +75,18 @@ export function PortfolioSection({ repos }: { repos: GithubRepo[] }) {
         </a>
       </div>
 
-      <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* mobile: horizontal scroll / md+: grid */}
+      <div className="md:hidden -mx-6 px-6">
+        <div ref={mobileGridRef} className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4"
+          style={{ scrollbarWidth: 'none' }}>
+          {repos.map(repo => (
+            <div key={repo.id} className="snap-start flex-shrink-0 w-[75vw] max-w-[300px]">
+              <RepoCard repo={repo} viewLabel={t('viewProject')} />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div ref={gridRef} className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {repos.map(repo => (
           <RepoCard key={repo.id} repo={repo} viewLabel={t('viewProject')} />
         ))}
