@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowUpRight, Send, ExternalLink, Clock } from 'lucide-react';
-import { FaXTwitter, FaYoutube, FaTiktok, FaInstagram, FaLinkedin, FaGithub, FaLine, FaFacebook } from 'react-icons/fa6';
+import { FaXTwitter, FaYoutube, FaTiktok, FaInstagram, FaLinkedin, FaGithub, FaLine, FaFacebook, FaDiscord } from 'react-icons/fa6';
 
 
 /* ─── NOTE ICON (公式SVGなし・カスタム) ──────────────────────────── */
@@ -294,6 +294,11 @@ function Community() {
             style={{ color: 'var(--foreground)' }}>{t('heading')}</h2>
           <p className="text-base leading-[1.9] mb-4" style={{ color: 'var(--muted)' }}>{t('desc1')}</p>
           <p className="text-base leading-[1.9]" style={{ color: 'var(--muted)' }}>{t('desc2')}</p>
+          <div className="mt-6 flex items-center gap-2 px-4 py-2.5 rounded-xl w-fit border border-[#5865F2]/30"
+            style={{ background: '#5865F2' + '18' }}>
+            <FaDiscord size={18} style={{ color: '#5865F2' }} />
+            <span className="text-sm font-semibold" style={{ color: '#5865F2' }}>Discord コミュニティ</span>
+          </div>
           <a href="https://notion.so" target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 mt-10 px-6 py-3 rounded-full text-sm font-bold transition-opacity hover:opacity-80"
             style={{ background: 'var(--foreground)', color: 'var(--background)' }}>
