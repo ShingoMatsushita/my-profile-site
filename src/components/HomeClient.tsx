@@ -241,25 +241,33 @@ function About() {
           </div>
         </div>
         <div ref={timelineRef} className="space-y-8">
-          {timeline.map((item, i) => (
-            <div key={i} className="flex gap-6 opacity-0">
-              <div className="flex-shrink-0 text-xs font-mono pt-1 opacity-40 w-16">{item.year}</div>
-              <div className="flex-1 border-t border-[var(--border)] pt-4">
+          {timeline.map((item, i) => {
+            const inner = (
+              <>
                 <div className="flex items-baseline justify-between mb-1">
-                  <h3 className="font-bold text-base" style={{ color: 'var(--foreground)' }}>{item.role}</h3>
+                  <h3 className="font-bold text-base flex items-center gap-1.5" style={{ color: 'var(--foreground)' }}>
+                    {item.role}
+                    {item.href && <ArrowUpRight size={13} className="opacity-40 flex-shrink-0" />}
+                  </h3>
                   <span className="text-xs opacity-40 font-mono">{item.place}</span>
                 </div>
                 <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>{item.desc}</p>
-                {item.href && (
+              </>
+            );
+            return (
+              <div key={i} className="flex gap-6 opacity-0">
+                <div className="flex-shrink-0 text-xs font-mono pt-1 opacity-40 w-16">{item.year}</div>
+                {item.href ? (
                   <a href={item.href} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 mt-2 text-xs font-mono opacity-40 hover:opacity-80 transition-opacity"
-                    style={{ color: 'var(--foreground)' }}>
-                    View <ExternalLink size={10} />
+                    className="flex-1 border-t border-[var(--border)] pt-4 -mx-3 px-3 rounded-xl transition-colors hover:bg-[var(--card)] group cursor-pointer">
+                    {inner}
                   </a>
+                ) : (
+                  <div className="flex-1 border-t border-[var(--border)] pt-4">{inner}</div>
                 )}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
