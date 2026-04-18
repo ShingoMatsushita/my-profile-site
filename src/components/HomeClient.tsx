@@ -192,7 +192,7 @@ function About() {
   const timelineRef = useRef<HTMLDivElement>(null);
   const skillsRef   = useRef<HTMLDivElement>(null);
   const notionRef   = useRef<HTMLDivElement>(null);
-  const timeline = tTimeline.raw('items') as Array<{ year: string; role: string; place: string; desc: string }>;
+  const timeline = tTimeline.raw('items') as Array<{ year: string; role: string; place: string; desc: string; href?: string }>;
   const notionCards = t.raw('notionCards') as Array<{ emoji: string; label: string; sub: string; href: string }>;
 
   useEffect(() => {
@@ -250,6 +250,13 @@ function About() {
                   <span className="text-xs opacity-40 font-mono">{item.place}</span>
                 </div>
                 <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>{item.desc}</p>
+                {item.href && (
+                  <a href={item.href} target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 mt-2 text-xs font-mono opacity-40 hover:opacity-80 transition-opacity"
+                    style={{ color: 'var(--foreground)' }}>
+                    View <ExternalLink size={10} />
+                  </a>
+                )}
               </div>
             </div>
           ))}

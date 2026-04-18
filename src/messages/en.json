@@ -28,9 +28,11 @@
   },
   "Timeline": {
     "items": [
-      { "year": "2024–", "role": "Freelance Developer", "place": "Remote",               "desc": "Working as a freelancer centered on web development, delivering high-quality products with a modern tech stack." },
-      { "year": "2023",  "role": "Web Developer",       "place": "Tokyo",                "desc": "Worked on front-end development at a startup, responsible for designing and implementing SPAs with React/Next.js." },
-      { "year": "2020",  "role": "University Graduate", "place": "Dept. of IT Engineering", "desc": "Majored in software development, algorithms, and database design." }
+      { "year": "2024–", "role": "Freelance Developer", "place": "Remote", "desc": "Working as a freelancer centered on web development, delivering high-quality products with a modern tech stack." },
+      { "year": "2023",  "role": "iOS App Release", "place": "App Store", "desc": "Released a meal management app \"Wotaberu\" on the App Store. Built with Swift / SwiftUI.", "href": "https://apps.apple.com/jp/app/%E3%82%A6%E3%82%A9%E3%82%BF%E3%81%B9%E3%82%8B/id6444708027" },
+      { "year": "2023",  "role": "Media Coverage", "place": "Prefectural Univ. of Kumamoto", "desc": "The developed app was featured on the university's official news site.", "href": "https://www.pu-kumamoto.ac.jp/users_site/ilab/news/info/wotaberu/" },
+      { "year": "2021–22", "role": "Programming Education for Kids", "place": "Prefectural Univ. of Kumamoto", "desc": "Participated in an initiative to teach programming to local elementary school students.", "href": "https://www.pu-kumamoto.ac.jp/users_site/ilab/news/info/gofuku-aozora-2021-2022/" },
+      { "year": "2020",  "role": "University Enrollment", "place": "Dept. of IT Engineering", "desc": "Majored in software development, algorithms, and database design." }
     ]
   },
   "Portfolio": {
