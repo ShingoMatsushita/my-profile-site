@@ -65,18 +65,12 @@ function MagneticLink({ href, external, label, brandColor, children }: { href: s
   return (
     <a ref={ref} href={href} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}
       onMouseMove={onMove} onMouseLeave={onLeave} onMouseEnter={() => setHovered(true)} title={label}
-      className="relative w-9 h-9 rounded-full border flex items-center justify-center transition-colors"
+      className="relative w-10 h-10 rounded-full border flex items-center justify-center transition-colors"
       style={{
         background: hovered ? hoverBg : 'var(--card)',
         borderColor: hovered ? hoverBg : 'var(--border)',
       }}>
       <span style={{ color: hovered ? '#fff' : 'var(--muted)', transition: 'color 0.15s' }}>{children}</span>
-      {label && (
-        <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[9px] font-mono whitespace-nowrap pointer-events-none"
-          style={{ color: 'var(--foreground)', opacity: hovered ? 0.5 : 0, transition: 'opacity 0.15s' }}>
-          {label}
-        </span>
-      )}
     </a>
   );
 }
@@ -132,8 +126,9 @@ function Hero() {
               ))}
             </div>
             <a href="#contact" onClick={e => { e.preventDefault(); document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' }); }}
-              className="inline-flex text-sm font-semibold items-center gap-2 group" style={{ color: 'var(--foreground)' }}>
-              {t('cta')} <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              className="inline-flex text-sm font-semibold items-center gap-2 px-5 py-2.5 rounded-full border border-[var(--border)]"
+              style={{ color: 'var(--foreground)' }}>
+              {t('cta')} <ArrowUpRight size={14} />
             </a>
           </div>
         </div>
@@ -337,7 +332,7 @@ function Community() {
               <p className="font-semibold text-sm mb-0.5" style={{ color: 'var(--foreground)' }}>{t('notionLabel')}</p>
               <p className="text-xs" style={{ color: 'var(--muted)' }}>{t('notionSub')}</p>
             </div>
-            <ExternalLink size={14} className="opacity-30 group-hover:opacity-70 transition-opacity flex-shrink-0" />
+            <ExternalLink size={14} className="opacity-50 flex-shrink-0" />
           </a>
 
           {/* Community site (coming soon) card */}
@@ -375,10 +370,11 @@ function ContactSocialRow({ Icon, label, val, href, color, external }: {
         }}>
         <Icon size={16} />
       </div>
-      <div>
+      <div className="flex-1">
         <p className="text-xs font-mono opacity-40">{label}</p>
         <p className="text-sm font-medium" style={{ color: 'var(--foreground)' }}>{val}</p>
       </div>
+      <ExternalLink size={13} className="opacity-30 flex-shrink-0" style={{ color: 'var(--foreground)' }} />
     </a>
   );
 }

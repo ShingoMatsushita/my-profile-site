@@ -125,7 +125,7 @@ function NoteCard({ post, readMore, index, mobile }: { post: NotePost; readMore:
             {post.description}
           </p>
         )}
-        <div className="mt-5 flex items-center gap-1 text-xs font-semibold transition-all group-hover:gap-2"
+        <div className="mt-5 inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-full border border-[var(--border)]"
           style={{ color: 'var(--foreground)' }}>
           {readMore} <ArrowUpRight size={12} />
         </div>

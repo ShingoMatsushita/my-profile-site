@@ -163,7 +163,9 @@ function RepoCard({ repo, viewLabel, mobile }: { repo: GithubRepo; viewLabel: st
             <GitFork size={11} /> {repo.forks_count}
           </span>
         )}
-        <span className="ml-auto opacity-40">{repo.updated_at.slice(0, 7)}</span>
+        <span className="ml-auto flex items-center gap-1 px-2.5 py-1 rounded-full border border-[var(--border)] text-[10px]" style={{ color: 'var(--foreground)' }}>
+          View <ArrowUpRight size={10} />
+        </span>
       </div>
     </a>
   );
