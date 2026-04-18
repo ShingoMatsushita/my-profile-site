@@ -18,7 +18,12 @@
   "About": {
     "heading": "私について",
     "bio1": "日本を拠点に活動するWeb Developer & Designerです。ユーザーが「気持ちいい」と感じるインターフェースを作ることに情熱を持っています。",
-    "bio2": "フロントエンド開発を主軸に、バックエンドからデザインまでフルスタックに対応。GSAP・Framer Motionを駆使したアニメーション実装が得意で、パフォーマンスとUXを両立したプロダクトを設計します。"
+    "bio2": "フロントエンド開発を主軸に、バックエンドからデザインまでフルスタックに対応。GSAP・Framer Motionを駆使したアニメーション実装が得意で、パフォーマンスとUXを両立したプロダクトを設計します。",
+    "notionCards": [
+      { "emoji": "📚", "label": "読んだ本リスト", "sub": "これまでに読んだ本をまとめています", "href": "https://local-guitar-3bf.notion.site/Books-5261c679bd9340539c0475ca70c9a600" },
+      { "emoji": "🎯", "label": "やりたいことリスト", "sub": "挑戦したいことを書き留めています", "href": "https://local-guitar-3bf.notion.site/1956409fddd8801aaaccf31e5266905e" },
+      { "emoji": "🚀", "label": "人生キャリア", "sub": "キャリアビジョンと目標を整理しています", "href": "https://local-guitar-3bf.notion.site/1b66409fddd880e1a20ec7175f39419b" }
+    ]
   },
   "Timeline": {
     "items": [

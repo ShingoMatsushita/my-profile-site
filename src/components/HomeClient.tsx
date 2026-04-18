@@ -192,7 +192,9 @@ function About() {
   const textRef     = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
   const skillsRef   = useRef<HTMLDivElement>(null);
+  const notionRef   = useRef<HTMLDivElement>(null);
   const timeline = tTimeline.raw('items') as Array<{ year: string; role: string; place: string; desc: string }>;
+  const notionCards = t.raw('notionCards') as Array<{ emoji: string; label: string; sub: string; href: string }>;
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -204,6 +206,7 @@ function About() {
           gsap.fromTo(textRef.current?.children ?? [], base, { ...to, stagger: 0.12, delay: 0.1 });
           gsap.fromTo(timelineRef.current?.children ?? [], { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.7, stagger: 0.15, ease: 'power3.out', delay: 0.2 });
           gsap.fromTo(skillsRef.current?.children ?? [], { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.5, stagger: 0.05, ease: 'power3.out', delay: 0.3 });
+          gsap.fromTo(notionRef.current?.children ?? [], { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power3.out', delay: 0.5 });
         },
       });
     }, sectionRef);
@@ -220,6 +223,21 @@ function About() {
           <p className="text-base leading-[1.9] mt-4" style={{ color: 'var(--muted)' }}>{t('bio2')}</p>
           <div ref={skillsRef} className="mt-10 flex flex-wrap gap-2">
             {skills.map(s => <span key={s} className="px-3 py-1.5 text-xs font-mono rounded-full border border-[var(--border)] opacity-0" style={{ color: 'var(--muted)' }}>{s}</span>)}
+          </div>
+          {/* Notion cards */}
+          <div ref={notionRef} className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {notionCards.map(card => (
+              <a key={card.label} href={card.href} target="_blank" rel="noopener noreferrer"
+                className="group flex flex-col gap-2 p-4 rounded-xl border border-[var(--border)] opacity-0 transition-shadow hover:shadow-md"
+                style={{ background: 'var(--card)' }}>
+                <span className="text-2xl">{card.emoji}</span>
+                <p className="text-sm font-semibold leading-snug" style={{ color: 'var(--foreground)' }}>{card.label}</p>
+                <p className="text-xs leading-relaxed" style={{ color: 'var(--muted)' }}>{card.sub}</p>
+                <span className="mt-auto flex items-center gap-1 text-[10px] font-mono opacity-30 group-hover:opacity-60 transition-opacity" style={{ color: 'var(--foreground)' }}>
+                  Notion <ExternalLink size={9} />
+                </span>
+              </a>
+            ))}
           </div>
         </div>
         <div ref={timelineRef} className="space-y-8">

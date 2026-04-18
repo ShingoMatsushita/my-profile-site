@@ -18,7 +18,12 @@
   "About": {
     "heading": "About Me",
     "bio1": "A Web Developer & Designer based in Japan, passionate about crafting interfaces that feel great to use.",
-    "bio2": "Primarily focused on front-end development, I cover the full stack from back-end to design. I specialize in animation with GSAP and Framer Motion, building products that balance performance and UX."
+    "bio2": "Primarily focused on front-end development, I cover the full stack from back-end to design. I specialize in animation with GSAP and Framer Motion, building products that balance performance and UX.",
+    "notionCards": [
+      { "emoji": "📚", "label": "Books I've Read", "sub": "A collection of books I've read", "href": "https://local-guitar-3bf.notion.site/Books-5261c679bd9340539c0475ca70c9a600" },
+      { "emoji": "🎯", "label": "Bucket List", "sub": "Things I want to challenge myself with", "href": "https://local-guitar-3bf.notion.site/1956409fddd8801aaaccf31e5266905e" },
+      { "emoji": "🚀", "label": "Life & Career", "sub": "My career vision and goals", "href": "https://local-guitar-3bf.notion.site/1b66409fddd880e1a20ec7175f39419b" }
+    ]
   },
   "Timeline": {
     "items": [
