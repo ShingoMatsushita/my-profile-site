@@ -43,10 +43,11 @@ const skills = [
 /* ─── SECTION LABEL ──────────────────────────────────────────────── */
 const SectionLabel = forwardRef<HTMLDivElement, { number: string; label: string }>(
   ({ number, label }, ref) => (
-    <div ref={ref} className="flex items-center gap-3">
-      <span className="text-xs font-mono opacity-30">{number}</span>
-      <span className="w-8 h-px bg-current opacity-20" />
-      <span className="text-xs font-mono tracking-widest uppercase opacity-40">{label}</span>
+    <div ref={ref} className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--border)]"
+      style={{ background: 'var(--card)', backdropFilter: 'blur(8px)' }}>
+      <span className="text-[10px] font-mono opacity-30">{number}</span>
+      <span className="w-px h-3 opacity-20" style={{ background: 'var(--foreground)' }} />
+      <span className="text-[10px] font-mono tracking-widest uppercase opacity-60">{label}</span>
     </div>
   )
 );
@@ -66,10 +67,12 @@ function MagneticLink({ href, external, label, brandColor, children }: { href: s
   return (
     <a ref={ref} href={href} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}
       onMouseMove={onMove} onMouseLeave={onLeave} onMouseEnter={() => setHovered(true)} title={label}
-      className="relative w-10 h-10 rounded-full border flex items-center justify-center transition-colors"
+      className="relative w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-200"
       style={{
         background: hovered ? hoverBg : 'var(--card)',
+        backdropFilter: 'blur(8px)',
         borderColor: hovered ? hoverBg : 'var(--border)',
+        boxShadow: hovered ? `0 4px 16px ${hoverBg}40` : 'var(--shadow)',
       }}>
       <span style={{ color: hovered ? '#fff' : 'var(--muted)', transition: 'color 0.15s' }}>{children}</span>
     </a>
@@ -138,26 +141,37 @@ function Hero() {
                 </MagneticLink>
               ))}
             </div>
-            <a href="#contact" onClick={e => { e.preventDefault(); document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' }); }}
-              className="inline-flex text-sm font-semibold items-center gap-2 px-5 py-2.5 rounded-full border border-[var(--border)]"
-              style={{ color: 'var(--foreground)' }}>
-              {t('cta')} <ArrowUpRight size={14} />
-            </a>
+            <div className="flex items-center gap-3 flex-wrap">
+              <a href="#contact" onClick={e => { e.preventDefault(); document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' }); }}
+                className="inline-flex text-sm font-semibold items-center gap-2 px-6 py-3 rounded-full transition-all duration-200 hover:opacity-90 active:scale-95"
+                style={{ background: 'var(--foreground)', color: 'var(--background)', boxShadow: 'var(--shadow-lg)' }}>
+                {t('cta')} <ArrowUpRight size={14} />
+              </a>
+              <a href="#portfolio" onClick={e => { e.preventDefault(); document.querySelector('#portfolio')?.scrollIntoView({ behavior: 'smooth' }); }}
+                className="inline-flex text-sm font-medium items-center gap-2 px-6 py-3 rounded-full border transition-all duration-200 hover:bg-[var(--border-strong)]"
+                style={{ borderColor: 'var(--border)', color: 'var(--muted)', backdropFilter: 'blur(8px)' }}>
+                {t('viewWork')} <ArrowUpRight size={14} />
+              </a>
+            </div>
           </div>
         </div>
         <div ref={imgRef} className="flex justify-center lg:justify-end opacity-0">
           <div className="relative">
-            <div className="w-64 h-64 lg:w-80 lg:h-80 rounded-2xl overflow-hidden relative bg-gradient-to-br from-zinc-100 via-zinc-200 to-zinc-300 dark:from-zinc-800 dark:via-zinc-700 dark:to-zinc-600">
+            {/* outer glow ring */}
+            <div className="absolute -inset-[1px] rounded-3xl pointer-events-none"
+              style={{ background: 'linear-gradient(135deg, var(--accent) 0%, transparent 60%)', opacity: 0.25 }} />
+            <div className="w-64 h-64 lg:w-80 lg:h-80 rounded-3xl overflow-hidden relative"
+              style={{ background: 'var(--card)', border: '1px solid var(--border)' }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/images/avatar.jpg" alt="Shingo Matsushita"
                 className="absolute inset-0 w-full h-full object-cover"
                 onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }} />
             </div>
-            <div className="absolute -inset-4 rounded-3xl border border-current opacity-10 pointer-events-none" />
-            <div className="absolute -inset-8 rounded-3xl border border-current opacity-5 pointer-events-none" />
-            <div className="absolute -bottom-4 -left-4 bg-card border border-[var(--border)] rounded-xl px-4 py-2 shadow-lg flex items-center gap-2 text-sm font-medium">
-              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              {t('availableForWork')}
+            {/* available badge */}
+            <div className="absolute -bottom-4 -left-4 rounded-2xl px-4 py-2.5 flex items-center gap-2 text-sm font-medium"
+              style={{ background: 'var(--card-solid)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-lg)', backdropFilter: 'blur(12px)' }}>
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse flex-shrink-0" />
+              <span style={{ color: 'var(--foreground)' }}>{t('availableForWork')}</span>
             </div>
           </div>
         </div>
@@ -227,17 +241,22 @@ function About() {
       <SectionLabel ref={labelRef} number="01" label="About" />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-16">
         <div ref={textRef}>
-          <h2 className="text-4xl lg:text-5xl font-black leading-tight tracking-tight mb-8" style={{ color: 'var(--foreground)' }}>{t('heading')}</h2>
-          <p className="text-base leading-[1.9]" style={{ color: 'var(--muted)' }}>{t('bio1')}</p>
-          <p className="text-base leading-[1.9] mt-4" style={{ color: 'var(--muted)' }}>{t('bio2')}</p>
+          <h2 className="text-4xl lg:text-5xl font-black leading-tight tracking-tight mb-6" style={{ color: 'var(--foreground)' }}>{t('heading')}</h2>
+          <p className="text-[15px] leading-[1.9]" style={{ color: 'var(--muted)' }}>{t('bio1')}</p>
+          <p className="text-[15px] leading-[1.9] mt-4" style={{ color: 'var(--muted)' }}>{t('bio2')}</p>
           <div ref={skillsRef} className="mt-10 flex flex-wrap gap-2">
-            {skills.map(s => <span key={s} className="px-3 py-1.5 text-xs font-mono rounded-full border border-[var(--border)] opacity-0" style={{ color: 'var(--muted)' }}>{s}</span>)}
+            {skills.map(s => (
+              <span key={s} className="px-3 py-1.5 text-xs font-mono rounded-full opacity-0 transition-all duration-200 hover:border-[var(--accent)]"
+                style={{ border: '1px solid var(--border)', color: 'var(--muted)', background: 'var(--card)' }}>
+                {s}
+              </span>
+            ))}
           </div>
-          <p className="text-xs font-mono tracking-widest uppercase opacity-40 mt-8 mb-3">{t('interestsLabel')}</p>
+          <p className="text-[10px] font-mono tracking-widest uppercase mt-8 mb-3" style={{ color: 'var(--muted-2)' }}>{t('interestsLabel')}</p>
           <div className="flex flex-wrap gap-2">
             {interests.map(item => (
               <span key={item} className="px-3 py-1.5 text-xs font-semibold rounded-full"
-                style={{ background: 'var(--foreground)', color: 'var(--background)', opacity: 0.75 }}>
+                style={{ background: 'var(--accent)', color: 'var(--accent-fg)', opacity: 0.85 }}>
                 {item}
               </span>
             ))}
@@ -246,43 +265,44 @@ function About() {
           <div ref={notionRef} className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
             {notionCards.map(card => (
               <a key={card.label} href={card.href} target="_blank" rel="noopener noreferrer"
-                className="group relative flex flex-col gap-2 p-4 rounded-xl border border-[var(--border)] opacity-0 transition-shadow hover:shadow-md"
-                style={{ background: 'var(--card)' }}>
+                className="group relative flex flex-col gap-2 p-4 rounded-2xl opacity-0 transition-all duration-200 hover:-translate-y-0.5"
+                style={{ background: 'var(--card)', border: '1px solid var(--border)', boxShadow: 'var(--shadow)', backdropFilter: 'blur(8px)' }}>
                 {/* Notion icon top-right */}
-                <div className="absolute top-3 right-3 w-6 h-6 flex items-center justify-center">
-                  <SiNotion size={18} style={{ color: 'var(--foreground)' }} />
+                <div className="absolute top-3 right-3 w-6 h-6 flex items-center justify-center opacity-40 group-hover:opacity-80 transition-opacity">
+                  <SiNotion size={16} style={{ color: 'var(--foreground)' }} />
                 </div>
-                <span className="text-2xl">{card.emoji}</span>
-                <p className="text-sm font-semibold leading-snug pr-6" style={{ color: 'var(--foreground)' }}>{card.label}</p>
-                <p className="text-xs leading-relaxed" style={{ color: 'var(--muted)' }}>{card.sub}</p>
+                <span className="text-xl">{card.emoji}</span>
+                <p className="text-xs font-semibold leading-snug pr-6" style={{ color: 'var(--foreground)' }}>{card.label}</p>
+                <p className="text-[11px] leading-relaxed" style={{ color: 'var(--muted)' }}>{card.sub}</p>
               </a>
             ))}
           </div>
         </div>
-        <div ref={timelineRef} className="space-y-8">
+        <div ref={timelineRef} className="space-y-1">
           {timeline.map((item, i) => {
             const inner = (
-              <>
-                <div className="flex items-baseline justify-between mb-1">
-                  <h3 className="font-bold text-base flex items-center gap-1.5" style={{ color: 'var(--foreground)' }}>
-                    {item.role}
-                    {item.href && <ArrowUpRight size={13} className="opacity-40 flex-shrink-0" />}
-                  </h3>
-                  <span className="text-xs opacity-40 font-mono">{item.place}</span>
+              <div className="flex gap-5 p-4 rounded-2xl transition-all duration-200 group-hover:bg-[var(--card)] group-hover:shadow-[var(--shadow)]">
+                <div className="flex-shrink-0 text-[10px] font-mono pt-1 w-14 tabular-nums" style={{ color: 'var(--muted-2)' }}>{item.year}</div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between mb-1 gap-2">
+                    <h3 className="font-semibold text-sm flex items-center gap-1.5" style={{ color: 'var(--foreground)' }}>
+                      {item.role}
+                      {item.href && <ArrowUpRight size={12} className="opacity-40 flex-shrink-0 group-hover:opacity-80 transition-opacity" />}
+                    </h3>
+                    <span className="text-[10px] font-mono flex-shrink-0" style={{ color: 'var(--muted-2)' }}>{item.place}</span>
+                  </div>
+                  <p className="text-xs leading-relaxed" style={{ color: 'var(--muted)' }}>{item.desc}</p>
                 </div>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>{item.desc}</p>
-              </>
+              </div>
             );
             return (
-              <div key={i} className="flex gap-6 opacity-0">
-                <div className="flex-shrink-0 text-xs font-mono pt-1 opacity-40 w-16">{item.year}</div>
+              <div key={i} className="opacity-0 group">
                 {item.href ? (
-                  <a href={item.href} target="_blank" rel="noopener noreferrer"
-                    className="flex-1 border-t border-[var(--border)] pt-4 -mx-3 px-3 rounded-xl transition-colors hover:bg-[var(--card)] group cursor-pointer">
+                  <a href={item.href} target="_blank" rel="noopener noreferrer" className="block group">
                     {inner}
                   </a>
                 ) : (
-                  <div className="flex-1 border-t border-[var(--border)] pt-4">{inner}</div>
+                  <div>{inner}</div>
                 )}
               </div>
             );
@@ -346,24 +366,25 @@ function Community() {
         <div className="space-y-4 opacity-0">
           {/* Notion card */}
           <a href="https://notion.so" target="_blank" rel="noopener noreferrer"
-            className="group flex items-center gap-5 p-5 rounded-2xl border border-[var(--border)] transition-shadow hover:shadow-lg"
-            style={{ background: 'var(--card)' }}>
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 border border-[var(--border)]"
-              style={{ background: 'var(--card)' }}>
-              <SiNotion size={22} style={{ color: 'var(--foreground)' }} />
+            className="group flex items-center gap-4 p-5 rounded-2xl transition-all duration-200 hover:-translate-y-0.5"
+            style={{ background: 'var(--card)', border: '1px solid var(--border)', boxShadow: 'var(--shadow)', backdropFilter: 'blur(8px)' }}>
+            <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+              style={{ background: 'var(--border-strong)' }}>
+              <SiNotion size={20} style={{ color: 'var(--foreground)' }} />
             </div>
             <div className="flex-1 min-w-0">
               <p className="font-semibold text-sm mb-0.5" style={{ color: 'var(--foreground)' }}>{t('notionLabel')}</p>
               <p className="text-xs" style={{ color: 'var(--muted)' }}>{t('notionSub')}</p>
             </div>
-            <ExternalLink size={14} className="opacity-50 flex-shrink-0" />
+            <ExternalLink size={13} className="opacity-30 group-hover:opacity-70 transition-opacity flex-shrink-0" />
           </a>
 
           {/* Community site (coming soon) card */}
-          <div className="flex items-center gap-5 p-5 rounded-2xl border border-dashed border-[var(--border)]"
-            style={{ background: 'var(--card)', opacity: 0.6 }}>
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 border border-[var(--border)]">
-              <Clock size={18} style={{ color: 'var(--muted)' }} />
+          <div className="flex items-center gap-4 p-5 rounded-2xl"
+            style={{ background: 'var(--card)', border: '1px dashed var(--border)', opacity: 0.6 }}>
+            <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+              style={{ background: 'var(--border)' }}>
+              <Clock size={17} style={{ color: 'var(--muted)' }} />
             </div>
             <div className="flex-1 min-w-0">
               <p className="font-semibold text-sm mb-0.5" style={{ color: 'var(--foreground)' }}>{t('siteLabel')}</p>
@@ -384,21 +405,22 @@ function ContactSocialRow({ Icon, label, val, href, color, external }: {
   const [hovered, setHovered] = useState(false);
   return (
     <a href={href} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}
-      className="flex items-center gap-4"
+      className="flex items-center gap-4 p-3 rounded-2xl transition-all duration-200 hover:-translate-x-0.5"
+      style={{ background: hovered ? 'var(--card)' : 'transparent', boxShadow: hovered ? 'var(--shadow)' : 'none' }}
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
-      <div className="w-10 h-10 rounded-xl border flex items-center justify-center transition-all duration-150"
+      <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-150"
         style={{
-          background: hovered ? color : 'var(--card)',
-          borderColor: hovered ? color : 'var(--border)',
+          background: hovered ? color : 'var(--border)',
           color: hovered ? '#fff' : 'var(--muted)',
+          boxShadow: hovered ? `0 4px 16px ${color}40` : 'none',
         }}>
         <Icon size={16} />
       </div>
       <div className="flex-1">
-        <p className="text-xs font-mono opacity-40">{label}</p>
+        <p className="text-[10px] font-mono" style={{ color: 'var(--muted-2)' }}>{label}</p>
         <p className="text-sm font-medium" style={{ color: 'var(--foreground)' }}>{val}</p>
       </div>
-      <ExternalLink size={13} className="opacity-30 flex-shrink-0" style={{ color: 'var(--foreground)' }} />
+      <ExternalLink size={13} className="flex-shrink-0 transition-opacity" style={{ color: 'var(--muted-2)', opacity: hovered ? 0.8 : 0.3 }} />
     </a>
   );
 }
@@ -442,9 +464,13 @@ function Contact() {
           </div>
         </div>
         {status === 'done' ? (
-          <div className="flex items-center justify-center rounded-2xl border border-[var(--border)] p-12" style={{ background: 'var(--card)' }}>
+          <div className="flex items-center justify-center rounded-3xl p-12"
+            style={{ background: 'var(--card)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-lg)', backdropFilter: 'blur(12px)' }}>
             <div className="text-center">
-              <p className="text-4xl mb-4">✓</p>
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5"
+                style={{ background: 'var(--accent)', boxShadow: '0 8px 32px var(--accent)40' }}>
+                <span className="text-white text-2xl font-bold">✓</span>
+              </div>
               <p className="font-bold text-xl mb-2" style={{ color: 'var(--foreground)' }}>{t('successTitle')}</p>
               <p className="text-sm" style={{ color: 'var(--muted)' }}>{t('successBody')}</p>
             </div>
@@ -456,20 +482,20 @@ function Contact() {
                 <div key={field} className="opacity-0">
                   <input type={type} placeholder={t(key as 'namePlaceholder'|'emailPlaceholder')} required
                     value={form[field as keyof typeof form]} onChange={e => setForm({ ...form, [field]: e.target.value })}
-                    className="w-full px-5 py-4 rounded-xl border border-[var(--border)] text-sm outline-none focus:border-foreground transition-colors"
-                    style={{ background: 'var(--card)', color: 'var(--foreground)' }} />
+                    className="w-full px-5 py-4 rounded-2xl text-sm outline-none transition-all duration-200 focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-0"
+                    style={{ background: 'var(--card)', color: 'var(--foreground)', border: '1px solid var(--border)', backdropFilter: 'blur(8px)' }} />
                 </div>
               ))}
               <div className="opacity-0">
                 <textarea placeholder={t('messagePlaceholder')} required rows={5}
                   value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
-                  className="w-full px-5 py-4 rounded-xl border border-[var(--border)] text-sm outline-none focus:border-foreground transition-colors resize-none"
-                  style={{ background: 'var(--card)', color: 'var(--foreground)' }} />
+                  className="w-full px-5 py-4 rounded-2xl text-sm outline-none transition-all duration-200 resize-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-0"
+                  style={{ background: 'var(--card)', color: 'var(--foreground)', border: '1px solid var(--border)', backdropFilter: 'blur(8px)' }} />
               </div>
               <div className="opacity-0">
                 <button type="submit" disabled={status === 'sending'}
-                  className="w-full py-4 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-opacity hover:opacity-80 disabled:opacity-50"
-                  style={{ background: 'var(--foreground)', color: 'var(--background)' }}>
+                  className="w-full py-4 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 transition-all hover:opacity-90 active:scale-[0.99] disabled:opacity-50"
+                  style={{ background: 'var(--accent)', color: '#fff', boxShadow: '0 4px 20px var(--accent)40' }}>
                   {status === 'sending' ? t('sending') : <><Send size={14} />{t('send')}</>}
                 </button>
               </div>
@@ -493,9 +519,10 @@ function Contact() {
 function Footer() {
   const t = useTranslations('Footer');
   return (
-    <footer className="border-t border-[var(--border)] px-6 lg:px-12 max-w-7xl mx-auto py-10 flex flex-col sm:flex-row justify-between items-center gap-4">
-      <p className="text-xs font-mono opacity-30">{t('copyright')}</p>
-      <p className="text-xs font-mono opacity-30">{t('builtWith')}</p>
+    <footer className="px-6 lg:px-12 max-w-7xl mx-auto py-10 flex flex-col sm:flex-row justify-between items-center gap-4"
+      style={{ borderTop: '1px solid var(--border)' }}>
+      <p className="text-[11px] font-mono" style={{ color: 'var(--muted-2)' }}>{t('copyright')}</p>
+      <p className="text-[11px] font-mono" style={{ color: 'var(--muted-2)' }}>{t('builtWith')}</p>
     </footer>
   );
 }
@@ -530,13 +557,16 @@ function Services() {
           {t('heading')}
         </h2>
       </div>
-      <div ref={cardsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div ref={cardsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {items.map(item => (
-          <div key={item.title} className="opacity-0 flex flex-col gap-4 p-6 rounded-2xl border border-[var(--border)]"
-            style={{ background: 'var(--card)' }}>
-            <span className="text-3xl">{item.icon}</span>
-            <h3 className="font-bold text-base" style={{ color: 'var(--foreground)' }}>{item.title}</h3>
-            <p className="text-sm leading-relaxed flex-1" style={{ color: 'var(--muted)' }}>{item.desc}</p>
+          <div key={item.title} className="opacity-0 flex flex-col gap-5 p-6 rounded-2xl transition-all duration-200 hover:-translate-y-1 group"
+            style={{ background: 'var(--card)', border: '1px solid var(--border)', boxShadow: 'var(--shadow)', backdropFilter: 'blur(8px)' }}>
+            <span className="text-2xl w-10 h-10 flex items-center justify-center rounded-xl"
+              style={{ background: 'var(--border)', fontSize: '1.2rem' }}>{item.icon}</span>
+            <div>
+              <h3 className="font-bold text-sm mb-2" style={{ color: 'var(--foreground)' }}>{item.title}</h3>
+              <p className="text-xs leading-relaxed" style={{ color: 'var(--muted)' }}>{item.desc}</p>
+            </div>
           </div>
         ))}
       </div>

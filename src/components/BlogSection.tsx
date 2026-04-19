@@ -13,10 +13,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 const SectionLabel = forwardRef<HTMLDivElement, { number: string; label: string }>(
   ({ number, label }, ref) => (
-    <div ref={ref} className="flex items-center gap-3">
-      <span className="text-xs font-mono opacity-30">{number}</span>
-      <span className="w-8 h-px bg-current opacity-20" />
-      <span className="text-xs font-mono tracking-widest uppercase opacity-40">{label}</span>
+    <div ref={ref} className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--border)]"
+      style={{ background: 'var(--card)', backdropFilter: 'blur(8px)' }}>
+      <span className="text-[10px] font-mono opacity-30">{number}</span>
+      <span className="w-px h-3 opacity-20" style={{ background: 'var(--foreground)' }} />
+      <span className="text-[10px] font-mono tracking-widest uppercase opacity-60">{label}</span>
     </div>
   )
 );
