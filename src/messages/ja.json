@@ -1,7 +1,8 @@
 {
   "Navigation": {
     "about": "About",
-    "work": "Work",
+    "projects": "Projects",
+    "services": "Services",
     "blog": "Blog",
     "community": "Community",
     "contact": "Contact"
@@ -18,8 +19,10 @@
   },
   "About": {
     "heading": "私について",
-    "bio1": "日本を拠点に活動するWeb Developer & Designerです。ユーザーが「気持ちいい」と感じるインターフェースを作ることに情熱を持っています。",
-    "bio2": "フロントエンド開発を主軸に、バックエンドからデザインまでフルスタックに対応。GSAP・Framer Motionを駆使したアニメーション実装が得意で、パフォーマンスとUXを両立したプロダクトを設計します。",
+    "bio1": "日本を拠点に活動するWeb Developer & DesignerでありAIコミュニティ「AIシドニー会」の主催者です。",
+    "bio2": "Webサイト制作・アプリ開発からAI活用支援・Notion/GWSの導入まで幅広く対応。テクノロジーを使って「人の行動が変わる体験」を作ることに情熱を持っています。",
+    "interestsLabel": "興味・関心",
+    "interests": ["AI活用", "Web制作", "Notion", "Google Workspace", "SNS戦略", "コミュニティ運営", "iOS開発", "教育×テクノロジー"],
     "notionCards": [
       { "emoji": "📚", "label": "読んだ本リスト", "sub": "これまでに読んだ本をまとめています", "href": "https://local-guitar-3bf.notion.site/Books-5261c679bd9340539c0475ca70c9a600" },
       { "emoji": "🎯", "label": "やりたいことリスト", "sub": "挑戦したいことを書き留めています", "href": "https://local-guitar-3bf.notion.site/1956409fddd8801aaaccf31e5266905e" },
@@ -36,13 +39,21 @@
     ]
   },
   "Portfolio": {
-    "sectionLabel": "Work",
-    "heading": "Selected Projects",
+    "sectionLabel": "Personal Projects",
+    "heading": "Personal Projects",
     "viewProject": "View Project",
-    "projects": [
-      { "desc": "GSAPを用いたインタラクティブなポートフォリオサイト。ScrollTriggerで没入感のある体験を実現。" },
-      { "desc": "リアルタイム同期対応のタスク管理アプリ。チームでの作業効率を大幅に向上させる設計。" },
-      { "desc": "Stripeを統合したECサイト。パフォーマンス最適化でCore Web Vitals全項目グリーン達成。" }
+    "projects": []
+  },
+  "Services": {
+    "sectionLabel": "Services",
+    "heading": "できること",
+    "contactCta": "まずは相談する",
+    "note": "※ 案件の規模・内容によって対応可否が変わります。まずはお気軽にご相談ください。",
+    "items": [
+      { "icon": "🌐", "title": "Web制作", "desc": "企業サイト・ポートフォリオ・LP制作。Next.js / Tailwind CSSを使ったモダンでパフォーマンスの高いサイトを提供します。" },
+      { "icon": "🤖", "title": "AI活用支援", "desc": "ChatGPT・Claude等のAIツールを業務に組み込むサポート。プロンプト設計から社内ルール整備まで対応。" },
+      { "icon": "🗂️", "title": "Notion / GWS 導入", "desc": "NotionやGoogle Workspaceを使った業務効率化・情報整理の仕組みづくりをサポート。" },
+      { "icon": "📱", "title": "SNS戦略", "desc": "X・Instagram・noteなどSNSの運用戦略立案・コンテンツ設計のサポート。AIシドニー会での実践経験をもとに提案します。" }
     ]
   },
   "Blog": {

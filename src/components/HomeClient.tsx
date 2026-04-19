@@ -189,6 +189,7 @@ function About() {
   const notionRef   = useRef<HTMLDivElement>(null);
   const timeline = tTimeline.raw('items') as Array<{ year: string; role: string; place: string; desc: string; href?: string }>;
   const notionCards = t.raw('notionCards') as Array<{ emoji: string; label: string; sub: string; href: string }>;
+  const interests = t.raw('interests') as string[];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -217,6 +218,15 @@ function About() {
           <p className="text-base leading-[1.9] mt-4" style={{ color: 'var(--muted)' }}>{t('bio2')}</p>
           <div ref={skillsRef} className="mt-10 flex flex-wrap gap-2">
             {skills.map(s => <span key={s} className="px-3 py-1.5 text-xs font-mono rounded-full border border-[var(--border)] opacity-0" style={{ color: 'var(--muted)' }}>{s}</span>)}
+          </div>
+          <p className="text-xs font-mono tracking-widest uppercase opacity-40 mt-8 mb-3">{t('interestsLabel')}</p>
+          <div className="flex flex-wrap gap-2">
+            {interests.map(item => (
+              <span key={item} className="px-3 py-1.5 text-xs font-semibold rounded-full"
+                style={{ background: 'var(--foreground)', color: 'var(--background)', opacity: 0.75 }}>
+                {item}
+              </span>
+            ))}
           </div>
           {/* Notion cards */}
           <div ref={notionRef} className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -477,4 +487,55 @@ function Footer() {
 }
 
 /* ─── EXPORT ─────────────────────────────────────────────────────── */
-export { Hero, Marquee, About, Community, Contact, Footer };
+/* ─── SERVICES ───────────────────────────────────────────────────── */
+function Services() {
+  const t = useTranslations('Services');
+  const sectionRef = useRef<HTMLElement>(null);
+  const labelRef   = useRef<HTMLDivElement>(null);
+  const cardsRef   = useRef<HTMLDivElement>(null);
+  const items = t.raw('items') as Array<{ icon: string; title: string; desc: string }>;
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: sectionRef.current, start: 'top 80%',
+        onEnter: () => {
+          gsap.fromTo(labelRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7 });
+          gsap.fromTo(cardsRef.current?.children ?? [], { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: 'power3.out', delay: 0.2 });
+        },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section id="services" ref={sectionRef} className="px-6 lg:px-12 max-w-7xl mx-auto py-32">
+      <SectionLabel ref={labelRef} number="03" label={t('sectionLabel')} />
+      <div className="flex items-end justify-between mt-6 mb-16">
+        <h2 className="text-4xl lg:text-5xl font-black leading-tight tracking-tight" style={{ color: 'var(--foreground)' }}>
+          {t('heading')}
+        </h2>
+      </div>
+      <div ref={cardsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {items.map(item => (
+          <div key={item.title} className="opacity-0 flex flex-col gap-4 p-6 rounded-2xl border border-[var(--border)]"
+            style={{ background: 'var(--card)' }}>
+            <span className="text-3xl">{item.icon}</span>
+            <h3 className="font-bold text-base" style={{ color: 'var(--foreground)' }}>{item.title}</h3>
+            <p className="text-sm leading-relaxed flex-1" style={{ color: 'var(--muted)' }}>{item.desc}</p>
+          </div>
+        ))}
+      </div>
+      <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <a href="#contact" onClick={e => { e.preventDefault(); document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' }); }}
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold transition-opacity hover:opacity-80"
+          style={{ background: 'var(--foreground)', color: 'var(--background)' }}>
+          {t('contactCta')} <ArrowUpRight size={14} />
+        </a>
+        <p className="text-xs" style={{ color: 'var(--muted)' }}>{t('note')}</p>
+      </div>
+    </section>
+  );
+}
+
+export { Hero, Marquee, About, Services, Community, Contact, Footer };

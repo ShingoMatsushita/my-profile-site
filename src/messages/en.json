@@ -1,7 +1,8 @@
 {
   "Navigation": {
     "about": "About",
-    "work": "Work",
+    "projects": "Projects",
+    "services": "Services",
     "blog": "Blog",
     "community": "Community",
     "contact": "Contact"
@@ -18,8 +19,10 @@
   },
   "About": {
     "heading": "About Me",
-    "bio1": "A Web Developer & Designer based in Japan, passionate about crafting interfaces that feel great to use.",
-    "bio2": "Primarily focused on front-end development, I cover the full stack from back-end to design. I specialize in animation with GSAP and Framer Motion, building products that balance performance and UX.",
+    "bio1": "A Web Developer & Designer based in Japan, and organizer of the AI community \"AI Sydney Club\".",
+    "bio2": "From web development and app creation to AI integration and Notion/GWS setup — I'm passionate about building experiences that change how people act through technology.",
+    "interestsLabel": "Interests",
+    "interests": ["AI Integration", "Web Development", "Notion", "Google Workspace", "SNS Strategy", "Community Building", "iOS Development", "EdTech"],
     "notionCards": [
       { "emoji": "📚", "label": "Books I've Read", "sub": "A collection of books I've read", "href": "https://local-guitar-3bf.notion.site/Books-5261c679bd9340539c0475ca70c9a600" },
       { "emoji": "🎯", "label": "Bucket List", "sub": "Things I want to challenge myself with", "href": "https://local-guitar-3bf.notion.site/1956409fddd8801aaaccf31e5266905e" },
@@ -36,13 +39,21 @@
     ]
   },
   "Portfolio": {
-    "sectionLabel": "Work",
-    "heading": "Selected Projects",
+    "sectionLabel": "Personal Projects",
+    "heading": "Personal Projects",
     "viewProject": "View Project",
-    "projects": [
-      { "desc": "An interactive portfolio site built with GSAP. ScrollTrigger creates an immersive browsing experience." },
-      { "desc": "A real-time synchronized task management app designed to dramatically improve team workflow efficiency." },
-      { "desc": "An e-commerce site integrated with Stripe. Performance optimization achieved green scores on all Core Web Vitals." }
+    "projects": []
+  },
+  "Services": {
+    "sectionLabel": "Services",
+    "heading": "What I Can Do",
+    "contactCta": "Let's Talk",
+    "note": "※ Availability depends on the scope and content of the project. Feel free to reach out anytime.",
+    "items": [
+      { "icon": "🌐", "title": "Web Development", "desc": "Corporate sites, portfolios, and landing pages. Modern, high-performance sites built with Next.js and Tailwind CSS." },
+      { "icon": "🤖", "title": "AI Integration", "desc": "Help integrating AI tools like ChatGPT and Claude into your workflow — from prompt design to internal guidelines." },
+      { "icon": "🗂️", "title": "Notion / GWS Setup", "desc": "Streamline your operations with Notion and Google Workspace. I'll help build systems that make information management effortless." },
+      { "icon": "📱", "title": "SNS Strategy", "desc": "Strategy and content design for X, Instagram, note, and more — backed by hands-on experience running the AI Sydney Club community." }
     ]
   },
   "Blog": {

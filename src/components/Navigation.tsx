@@ -10,7 +10,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const navItems = [
   { href: '#about',     label: 'About' },
-  { href: '#portfolio', label: 'Work' },
+  { href: '#portfolio', label: 'Projects' },
+  { href: '#services',  label: 'Services' },
   { href: '#blog',      label: 'Blog' },
   { href: '#community', label: 'Community' },
   { href: '#contact',   label: 'Contact' },
