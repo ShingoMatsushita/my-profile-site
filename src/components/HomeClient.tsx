@@ -88,54 +88,22 @@ function Hero() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
       const head = headRef.current;
-
       if (head) {
         const lines = head.getAttribute('data-text')?.split('\n') ?? [];
-        // build spans per character
         head.innerHTML = lines.map(line =>
-          `<span class="block overflow-visible">${
-            line.split('').map(ch =>
-              ch === ' '
-                ? `<span class="inline-block" style="white-space:pre"> </span>`
-                : `<span class="inline-block char" data-final="${ch}"> </span>`
-            ).join('')
-          }</span>`
+          `<span class="block overflow-hidden"><span class="block">${line}</span></span>`
         ).join('');
-
-        const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$@#%';
-        const charEls = Array.from(head.querySelectorAll<HTMLElement>('.char'));
-
-        charEls.forEach((el, idx) => {
-          const final = el.dataset.final ?? '';
-          const delay = 0.04 + idx * 0.045;
-          const duration = 0.55;
-          const scrambleDuration = duration * 0.65;
-          const steps = Math.round(scrambleDuration / 0.045);
-          let count = 0;
-
-          gsap.delayedCall(delay, () => {
-            const interval = setInterval(() => {
-              el.textContent = CHARS[Math.floor(Math.random() * CHARS.length)];
-              el.style.opacity = '1';
-              count++;
-              if (count >= steps) {
-                clearInterval(interval);
-                el.textContent = final;
-              }
-            }, 45);
-          });
-        });
-
-        // fade in the whole heading first (chars start invisible)
         gsap.set(head, { opacity: 1 });
-        charEls.forEach(el => { el.style.opacity = '0'; });
+        tl.fromTo(head.querySelectorAll('span > span'),
+          { y: '105%', opacity: 0 },
+          { y: '0%', opacity: 1, duration: 1.0, stagger: 0.18 }
+        );
       }
-
-      tl.fromTo(subRef.current,  { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.8 }, 0.6)
-        .fromTo(metaRef.current,  { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.4')
-        .fromTo(imgRef.current,   { opacity: 0, scale: 0.92, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 1.0, ease: 'power3.out' }, 0.2)
+      tl.fromTo(subRef.current,   { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.9 }, '-=0.5')
+        .fromTo(metaRef.current,  { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.7 }, '-=0.5')
+        .fromTo(imgRef.current,   { opacity: 0, scale: 0.94, y: 24 }, { opacity: 1, scale: 1, y: 0, duration: 1.0, ease: 'power3.out' }, '-=1.0')
         .fromTo(scrollRef.current,{ opacity: 0 }, { opacity: 1, duration: 0.6 }, '-=0.2');
       const bounceEl = scrollRef.current?.querySelector('.bounce');
       if (bounceEl) gsap.to(bounceEl, { y: 8, duration: 1.2, repeat: -1, yoyo: true, ease: 'sine.inOut' });
@@ -156,7 +124,7 @@ function Hero() {
           <p className="text-xs font-mono tracking-[0.2em] uppercase mb-8 opacity-50">{t('basedIn')}</p>
           <h1 ref={headRef} data-text={t('name')}
             className="text-[clamp(3.2rem,7vw,5.5rem)] font-black leading-[0.95] tracking-tight mb-8 opacity-0"
-            style={{ color: 'var(--foreground)', fontVariantNumeric: 'tabular-nums' }}>
+            style={{ color: 'var(--foreground)' }}>
             {t('name')}
           </h1>
           <p ref={subRef} className="text-lg leading-relaxed max-w-md opacity-0" style={{ color: 'var(--muted)' }}>
