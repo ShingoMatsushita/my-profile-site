@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowUpRight, Send, ExternalLink, Clock } from 'lucide-react';
+import { HeroShader } from './HeroShader';
 import { FaXTwitter, FaYoutube, FaTiktok, FaInstagram, FaLinkedin, FaLine, FaFacebook, FaDiscord } from 'react-icons/fa6';
 import { SiNotion } from 'react-icons/si';
 
@@ -105,6 +106,11 @@ function Hero() {
   }, []);
 
   return (
+    <div className="relative">
+      {/* WebGL shader background */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <HeroShader />
+      </div>
     <section ref={sectionRef} className="relative min-h-screen flex flex-col justify-center pt-16 px-6 lg:px-12 max-w-7xl mx-auto">
       <div className="absolute top-28 right-6 lg:right-12 text-xs font-mono opacity-40 tracking-widest uppercase">{t('copyright')}</div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-0 items-center">
@@ -156,6 +162,7 @@ function Hero() {
         <span className="text-xs font-mono tracking-widest uppercase opacity-30">{t('scroll')}</span>
       </div>
     </section>
+    </div>
   );
 }
 
