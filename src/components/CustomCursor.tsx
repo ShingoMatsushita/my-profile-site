@@ -4,41 +4,65 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 
 export function CustomCursor() {
-  const dotRef  = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const trailsRef = useRef<HTMLDivElement[]>([]);
   const isTouch = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
 
   useEffect(() => {
     if (isTouch) return;
-    const dot  = dotRef.current;
-    const ring = ringRef.current;
-    if (!dot || !ring) return;
+    const cursor = cursorRef.current;
+    if (!cursor) return;
 
     document.body.style.cursor = 'none';
 
-    let mouseX = 0, mouseY = 0;
+    const TRAIL_COUNT = 8;
+    const positions: { x: number; y: number }[] = Array.from({ length: TRAIL_COUNT }, () => ({ x: 0, y: 0 }));
+    let mouseX = -100, mouseY = -100;
+    let rafId: number;
+
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+    const tick = () => {
+      positions[0].x = lerp(positions[0].x, mouseX, 0.35);
+      positions[0].y = lerp(positions[0].y, mouseY, 0.35);
+
+      for (let i = 1; i < TRAIL_COUNT; i++) {
+        positions[i].x = lerp(positions[i].x, positions[i - 1].x, 0.5 - i * 0.025);
+        positions[i].y = lerp(positions[i].y, positions[i - 1].y, 0.5 - i * 0.025);
+      }
+
+      const els = cursor.querySelectorAll<HTMLDivElement>('.trail-dot');
+      els.forEach((el, i) => {
+        const scale = 1 - i * 0.09;
+        el.style.transform = `translate(${positions[i].x}px, ${positions[i].y}px) translate(-50%, -50%) scale(${scale})`;
+        el.style.opacity = String(1 - i * 0.1);
+      });
+
+      rafId = requestAnimationFrame(tick);
+    };
 
     const onMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      gsap.to(dot,  { x: mouseX, y: mouseY, duration: 0.05, ease: 'none', overwrite: true });
-      gsap.to(ring, { x: mouseX, y: mouseY, duration: 0.18, ease: 'power2.out', overwrite: true });
     };
 
+    let isLink = false;
     const onEnterLink = () => {
-      gsap.to(ring, { scale: 2.2, opacity: 0.5, duration: 0.3, ease: 'power2.out' });
-      gsap.to(dot,  { scale: 0,   duration: 0.2 });
+      isLink = true;
+      cursor.querySelectorAll<HTMLDivElement>('.trail-dot').forEach((el, i) => {
+        gsap.to(el, { width: i === 0 ? 40 : 6, height: i === 0 ? 40 : 6, duration: 0.3, ease: 'power2.out' });
+      });
     };
     const onLeaveLink = () => {
-      gsap.to(ring, { scale: 1, opacity: 1, duration: 0.35, ease: 'elastic.out(1, 0.6)' });
-      gsap.to(dot,  { scale: 1, duration: 0.3 });
+      isLink = false;
+      cursor.querySelectorAll<HTMLDivElement>('.trail-dot').forEach((el, i) => {
+        const base = 8 - i;
+        gsap.to(el, { width: Math.max(base, 2), height: Math.max(base, 2), duration: 0.4, ease: 'elastic.out(1, 0.6)' });
+      });
     };
-    const onDown = () => gsap.to(ring, { scale: 0.8, duration: 0.1 });
-    const onUp   = () => gsap.to(ring, { scale: 1,   duration: 0.3, ease: 'elastic.out(1, 0.6)' });
 
     window.addEventListener('mousemove', onMove);
-    window.addEventListener('mousedown', onDown);
-    window.addEventListener('mouseup',   onUp);
+    rafId = requestAnimationFrame(tick);
 
     const addListeners = () => {
       document.querySelectorAll('a, button, [data-cursor]').forEach(el => {
@@ -53,8 +77,7 @@ export function CustomCursor() {
     return () => {
       document.body.style.cursor = '';
       window.removeEventListener('mousemove', onMove);
-      window.removeEventListener('mousedown', onDown);
-      window.removeEventListener('mouseup',   onUp);
+      cancelAnimationFrame(rafId);
       observer.disconnect();
     };
   }, [isTouch]);
@@ -62,30 +85,21 @@ export function CustomCursor() {
   if (isTouch) return null;
 
   return (
-    <>
-      <div
-        ref={dotRef}
-        className="fixed top-0 left-0 pointer-events-none z-[9999]"
-        style={{
-          width: 6, height: 6,
-          borderRadius: '50%',
-          background: 'var(--foreground)',
-          transform: 'translate(-50%, -50%)',
-          willChange: 'transform',
-        }}
-      />
-      <div
-        ref={ringRef}
-        className="fixed top-0 left-0 pointer-events-none z-[9999]"
-        style={{
-          width: 32, height: 32,
-          borderRadius: '50%',
-          border: '1.5px solid var(--foreground)',
-          transform: 'translate(-50%, -50%)',
-          willChange: 'transform',
-          opacity: 0.6,
-        }}
-      />
-    </>
+    <div ref={cursorRef} className="fixed inset-0 pointer-events-none z-[9999]">
+      {Array.from({ length: 8 }).map((_, i) => (
+        <div
+          key={i}
+          className="trail-dot fixed top-0 left-0 rounded-full"
+          style={{
+            width: Math.max(8 - i, 2),
+            height: Math.max(8 - i, 2),
+            background: i === 0 ? 'var(--foreground)' : 'transparent',
+            border: i === 0 ? 'none' : '1.5px solid var(--foreground)',
+            willChange: 'transform',
+            transition: 'width 0.1s, height 0.1s',
+          }}
+        />
+      ))}
+    </div>
   );
 }
