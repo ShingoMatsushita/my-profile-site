@@ -10,16 +10,22 @@
   "Hero": {
     "basedIn": "Based in Japan",
     "name": "松下 慎吾",
-    "sub1": "Web Developer & Designer.",
-    "sub2": "美しく、速く、使いやすいデジタル体験を作ります。",
-    "cta": "お仕事の依頼",
-    "viewWork": "実績を見る",
+    "sub1": "AIとツールで、人と現場の“動き方”を変える。",
+    "sub2": "開発もする実践者 / AIシドニー会 主宰",
+    "cta": "繋がる",
+    "viewWork": "活動を見る",
     "scroll": "Scroll",
-    "availableForWork": "Available for work",
-    "copyright": "© 2024 — Developer"
+    "availableForWork": "話しかけてOK",
+    "copyright": "© {year} — Developer"
   },
   "About": {
     "heading": "私について",
+    "highlightsLabel": "ハイライト",
+    "highlights": [
+      { "emoji": "📱", "label": "iOSアプリをリリース", "sub": "食事管理アプリ「ウォタべる」を App Store で公開", "href": "https://apps.apple.com/jp/app/%E3%82%A6%E3%82%A9%E3%82%BF%E3%81%B9%E3%82%8B/id6444708027" },
+      { "emoji": "📰", "label": "大学メディアに掲載", "sub": "開発アプリが熊本県立大学の公式ニュースに掲載", "href": "https://www.pu-kumamoto.ac.jp/users_site/ilab/news/info/wotaberu/" },
+      { "emoji": "🤖", "label": "AIコミュニティを主宰", "sub": "「AIシドニー会」を運営中", "href": "#community" }
+    ],
     "bio1": "日本を拠点に活動するWeb Developer & DesignerでありAIコミュニティ「AIシドニー会」の主催者です。",
     "bio2": "Webサイト制作・アプリ開発からAI活用支援・Notion/GWSの導入まで幅広く対応。テクノロジーを使って「人の行動が変わる体験」を作ることに情熱を持っています。",
     "interestsLabel": "興味・関心",
@@ -48,8 +54,6 @@
   "Services": {
     "sectionLabel": "Services",
     "heading": "できること",
-    "contactCta": "まずは相談する",
-    "note": "※ 案件の規模・内容によって対応可否が変わります。まずはお気軽にご相談ください。",
     "items": [
       { "icon": "🌐", "title": "Web制作", "desc": "企業サイト・ポートフォリオ・LP制作。Next.js / Tailwind CSSを使ったモダンでパフォーマンスの高いサイトを提供します。" },
       { "icon": "🤖", "title": "AI活用支援", "desc": "ChatGPT・Claude等のAIツールを業務に組み込むサポート。プロンプト設計から社内ルール整備まで対応。" },
@@ -60,12 +64,7 @@
   "Blog": {
     "sectionLabel": "Blog",
     "heading": "Latest Writing",
-    "readMore": "Read more",
-    "posts": [
-      { "title": "GSAPで作る没入型スクロールアニメーション", "desc": "ScrollTriggerを使ってポートフォリオサイトに映画的な体験をもたらす方法を解説します。" },
-      { "title": "Next.js 14 で Core Web Vitals を改善する",  "desc": "App RouterとServer Componentsを活用してLCP・CLS・INPを劇的に改善した実例を紹介。" },
-      { "title": "実務で使えるTypeScriptデザインパターン",     "desc": "Result型・Builder・Discriminated Unionなど、大規模アプリで活きるパターンをまとめました。" }
-    ]
+    "readMore": "Read more"
   },
   "Community": {
     "sectionLabel": "Community",
@@ -82,20 +81,14 @@
   "Contact": {
     "sectionLabel": "Contact",
     "bigText": "Let's talk.",
-    "intro1": "新しいプロジェクトについてのご相談、または単純に挨拶でも構いません。",
-    "intro2": "お気軽にメッセージを送ってください。",
-    "namePlaceholder": "お名前",
-    "emailPlaceholder": "メールアドレス",
-    "messagePlaceholder": "メッセージ",
-    "send": "送信する",
-    "sending": "送信中…",
-    "successTitle": "送信完了！",
-    "successBody": "近日中にご返信します。",
-    "orEmail": "または直接メールで",
-    "emailAddress": "hello@example.com"
+    "intro1": "新しいプロジェクトの相談でも、ただの挨拶でも歓迎です。",
+    "intro2": "下のどこからでも気軽にどうぞ。",
+    "primaryLabel": "一番返信が早いのはここ",
+    "primaryNote": "LINE か Instagram のDMが一番すぐ気づきます。お気軽に。",
+    "otherLabel": "その他のSNS・リンク"
   },
   "Footer": {
-    "copyright": "© 2024 Shingo Matsushita",
+    "copyright": "© {year} Shingo Matsushita",
     "builtWith": "Built with Next.js & GSAP"
   }
 }
