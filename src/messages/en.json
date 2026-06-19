@@ -10,16 +10,22 @@
   "Hero": {
     "basedIn": "Based in Japan",
     "name": "Shingo\nMatsushita",
-    "sub1": "Web Developer & Designer.",
-    "sub2": "Building beautiful, fast, and intuitive digital experiences.",
-    "cta": "Hire me",
-    "viewWork": "View work",
+    "sub1": "Changing how people and teams work,",
+    "sub2": "with AI and the right tools. Builder · AI Sydney Club organizer.",
+    "cta": "Let's connect",
+    "viewWork": "See what I do",
     "scroll": "Scroll",
-    "availableForWork": "Available for work",
-    "copyright": "© 2024 — Developer"
+    "availableForWork": "Open to chat",
+    "copyright": "© {year} — Developer"
   },
   "About": {
     "heading": "About Me",
+    "highlightsLabel": "Highlights",
+    "highlights": [
+      { "emoji": "📱", "label": "Released an iOS App", "sub": "Published meal-tracking app \"Wotaberu\" on the App Store", "href": "https://apps.apple.com/jp/app/%E3%82%A6%E3%82%A9%E3%82%BF%E3%81%B9%E3%82%8B/id6444708027" },
+      { "emoji": "📰", "label": "Featured in University Media", "sub": "My app was featured on the Prefectural Univ. of Kumamoto news", "href": "https://www.pu-kumamoto.ac.jp/users_site/ilab/news/info/wotaberu/" },
+      { "emoji": "🤖", "label": "Founded an AI Community", "sub": "Organizing the \"AI Sydney Club\"", "href": "#community" }
+    ],
     "bio1": "A Web Developer & Designer based in Japan, and organizer of the AI community \"AI Sydney Club\".",
     "bio2": "From web development and app creation to AI integration and Notion/GWS setup — I'm passionate about building experiences that change how people act through technology.",
     "interestsLabel": "Interests",
@@ -48,8 +54,6 @@
   "Services": {
     "sectionLabel": "Services",
     "heading": "What I Can Do",
-    "contactCta": "Let's Talk",
-    "note": "※ Availability depends on the scope and content of the project. Feel free to reach out anytime.",
     "items": [
       { "icon": "🌐", "title": "Web Development", "desc": "Corporate sites, portfolios, and landing pages. Modern, high-performance sites built with Next.js and Tailwind CSS." },
       { "icon": "🤖", "title": "AI Integration", "desc": "Help integrating AI tools like ChatGPT and Claude into your workflow — from prompt design to internal guidelines." },
@@ -60,12 +64,7 @@
   "Blog": {
     "sectionLabel": "Blog",
     "heading": "Latest Writing",
-    "readMore": "Read more",
-    "posts": [
-      { "title": "Immersive Scroll Animations with GSAP",             "desc": "How to bring cinematic experiences to your portfolio site using ScrollTrigger." },
-      { "title": "Improving Core Web Vitals with Next.js 14",         "desc": "A real-world case of dramatically improving LCP, CLS, and INP with App Router and Server Components." },
-      { "title": "Practical TypeScript Design Patterns",              "desc": "Patterns that shine in large-scale apps: Result type, Builder, Discriminated Union, and more." }
-    ]
+    "readMore": "Read more"
   },
   "Community": {
     "sectionLabel": "Community",
@@ -83,19 +82,13 @@
     "sectionLabel": "Contact",
     "bigText": "Let's talk.",
     "intro1": "Whether it's a new project or just a hello —",
-    "intro2": "feel free to reach out anytime.",
-    "namePlaceholder": "Your Name",
-    "emailPlaceholder": "Email Address",
-    "messagePlaceholder": "Message",
-    "send": "Send",
-    "sending": "Sending…",
-    "successTitle": "Message Sent!",
-    "successBody": "I'll get back to you soon.",
-    "orEmail": "Or reach out directly via email",
-    "emailAddress": "hello@example.com"
+    "intro2": "reach out from anywhere below.",
+    "primaryLabel": "Fastest way to reach me",
+    "primaryNote": "I notice DMs on LINE or Instagram the quickest. Don't be shy.",
+    "otherLabel": "Other socials & links"
   },
   "Footer": {
-    "copyright": "© 2024 Shingo Matsushita",
+    "copyright": "© {year} Shingo Matsushita",
     "builtWith": "Built with Next.js & GSAP"
   }
 }

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowUpRight, Send, ExternalLink, Clock } from 'lucide-react';
+import { ArrowUpRight, ExternalLink, Clock } from 'lucide-react';
 import { HeroShader } from './HeroShader';
 import { FaXTwitter, FaYoutube, FaTiktok, FaInstagram, FaLinkedin, FaLine, FaFacebook, FaDiscord } from 'react-icons/fa6';
 import { SiNotion } from 'react-icons/si';
@@ -94,6 +94,24 @@ function splitIntoLineSpans(el: HTMLElement, html: string) {
   return el.querySelectorAll<HTMLElement>('.line-inner');
 }
 
+/* ─── LINK CARD ─────────────────────────────────────────────────── */
+/* Shared anchor-card chrome: external-link handling + card surface + hover.
+   Per-card layout (padding, radius, flex, opacity) is passed via className. */
+function LinkCard({ href, className, children }: { href: string; className?: string; children: React.ReactNode }) {
+  const external = href.startsWith('http');
+  return (
+    <a
+      href={href}
+      target={external ? '_blank' : undefined}
+      rel={external ? 'noopener noreferrer' : undefined}
+      className={`group transition-all duration-300 hover:-translate-y-1 ${className ?? ''}`}
+      style={{ background: 'var(--card)', border: '1px solid var(--border)', boxShadow: 'var(--shadow)', backdropFilter: 'blur(8px)' }}
+    >
+      {children}
+    </a>
+  );
+}
+
 /* ─── HERO ──────────────────────────────────────────────────────── */
 function Hero() {
   const t = useTranslations('Hero');
@@ -154,7 +172,7 @@ function Hero() {
       >
         {/* Copyright tag */}
         <div className="absolute top-28 right-6 lg:right-12 text-[10px] font-mono opacity-30 tracking-widest uppercase">
-          {t('copyright')}
+          {t('copyright', { year: new Date().getFullYear() })}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 lg:gap-24 items-center">
@@ -208,7 +226,7 @@ function Hero() {
                   className="group relative overflow-hidden inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-bold transition-all duration-300"
                   style={{ background: 'var(--foreground)', color: 'var(--background)' }}
                 >
-                  <span className="relative z-10 flex items-center gap-2">
+                  <span className="relative z-10 flex items-center gap-2 transition-colors duration-300 group-hover:text-black">
                     {t('cta')} <ArrowUpRight size={14} />
                   </span>
                   <span
@@ -320,8 +338,8 @@ function Marquee() {
   }, []);
 
   const items = [
-    'TypeScript','·','React','·','Next.js','·','GSAP','·','Node.js','·','PostgreSQL','·',
-    'Design','·','Animation','·','Three.js','·','Docker','·','Tailwind','·',
+    'AI','·','ChatGPT','·','Claude','·','Notion','·','Google Workspace','·','Community','·',
+    'Next.js','·','TypeScript','·','React','·','GSAP','·','Three.js','·','iOS','·',
   ];
   const doubled = [...items, ...items];
 
@@ -343,25 +361,20 @@ function Marquee() {
 }
 
 /* ─── ABOUT ───────────────────────────────────────────────────────── */
-const STATS = [
-  { num: 3,   suffix: '+', label: '年の\n経験' },
-  { num: 20,  suffix: '+', label: 'プロジェクト\n完了' },
-  { num: 100, suffix: '%', label: 'コミット\nクオリティ' },
-];
-
 function About() {
   const t         = useTranslations('About');
   const tTimeline = useTranslations('Timeline');
   const sectionRef  = useRef<HTMLElement>(null);
   const labelRef    = useRef<HTMLDivElement>(null);
   const headRef     = useRef<HTMLHeadingElement>(null);
-  const statsRef    = useRef<HTMLDivElement>(null);
+  const highlightsRef    = useRef<HTMLDivElement>(null);
   const textRef     = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
   const skillsRef   = useRef<HTMLDivElement>(null);
   const notionRef   = useRef<HTMLDivElement>(null);
   const timeline    = tTimeline.raw('items') as Array<{ year: string; role: string; place: string; desc: string; href?: string }>;
   const notionCards = t.raw('notionCards') as Array<{ emoji: string; label: string; sub: string; href: string }>;
+  const highlights  = t.raw('highlights') as Array<{ emoji: string; label: string; sub: string; href: string }>;
   const interests   = t.raw('interests') as string[];
 
   useEffect(() => {
@@ -382,18 +395,9 @@ function About() {
             gsap.fromTo(lines, { y: '105%' }, { y: '0%', duration: 1.0, stagger: 0.12, ease: 'power4.out', delay: 0.1 });
           }
 
-          /* Counter animation */
-          if (statsRef.current) {
-            statsRef.current.querySelectorAll<HTMLElement>('.stat-num').forEach((el, i) => {
-              const target = STATS[i].num;
-              gsap.fromTo({ val: 0 }, { val: target }, {
-                duration: 1.5,
-                ease: 'power2.out',
-                delay: 0.2 + i * 0.15,
-                onUpdate: function() { el.textContent = Math.round(this.targets()[0].val) + STATS[i].suffix; },
-              });
-            });
-            gsap.fromTo(statsRef.current.children, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, delay: 0.1 });
+          /* Highlight cards */
+          if (highlightsRef.current) {
+            gsap.fromTo(highlightsRef.current.children, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, delay: 0.15, ease: 'power3.out' });
           }
 
           gsap.fromTo(textRef.current?.children ?? [], base, { ...to, stagger: 0.1, delay: 0.2 });
@@ -422,18 +426,20 @@ function About() {
         {t('heading')}
       </h2>
 
-      {/* Stats row */}
-      <div ref={statsRef} className="grid grid-cols-3 gap-6 mb-20 pb-16" style={{ borderBottom: '1px solid var(--border)' }}>
-        {STATS.map((s, i) => (
-          <div key={i} className="opacity-0">
-            <div
-              className="stat-num font-black tabular-nums"
-              style={{ fontSize: 'clamp(2.4rem, 5vw, 4rem)', color: 'var(--foreground)', letterSpacing: '-0.04em', lineHeight: 1 }}
-            >
-              0{s.suffix}
+      {/* Highlights row */}
+      <p className="text-[10px] font-mono tracking-widest uppercase mb-4" style={{ color: 'var(--muted-2)' }}>
+        {t('highlightsLabel')}
+      </p>
+      <div ref={highlightsRef} className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-20 pb-16" style={{ borderBottom: '1px solid var(--border)' }}>
+        {highlights.map(h => (
+          <LinkCard key={h.label} href={h.href} className="opacity-0 flex flex-col gap-2 p-5 rounded-2xl">
+            <div className="flex items-center justify-between">
+              <span className="text-2xl">{h.emoji}</span>
+              <ArrowUpRight size={14} className="opacity-30 group-hover:opacity-80 transition-opacity" style={{ color: 'var(--foreground)' }} />
             </div>
-            <p className="mt-2 text-xs font-mono whitespace-pre-line" style={{ color: 'var(--muted)' }}>{s.label}</p>
-          </div>
+            <p className="font-bold text-sm leading-snug mt-1" style={{ color: 'var(--foreground)' }}>{h.label}</p>
+            <p className="text-xs leading-relaxed" style={{ color: 'var(--muted)' }}>{h.sub}</p>
+          </LinkCard>
         ))}
       </div>
 
@@ -478,21 +484,14 @@ function About() {
           {/* Notion cards */}
           <div ref={notionRef} className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
             {notionCards.map(card => (
-              <a
-                key={card.label}
-                href={card.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative flex flex-col gap-2 p-4 rounded-2xl opacity-0 transition-all duration-300 hover:-translate-y-1"
-                style={{ background: 'var(--card)', border: '1px solid var(--border)', boxShadow: 'var(--shadow)', backdropFilter: 'blur(8px)' }}
-              >
+              <LinkCard key={card.label} href={card.href} className="relative flex flex-col gap-2 p-4 rounded-2xl opacity-0">
                 <div className="absolute top-3 right-3 w-6 h-6 flex items-center justify-center opacity-30 group-hover:opacity-70 transition-opacity">
                   <SiNotion size={16} style={{ color: 'var(--foreground)' }} />
                 </div>
                 <span className="text-xl">{card.emoji}</span>
                 <p className="text-xs font-semibold leading-snug pr-6" style={{ color: 'var(--foreground)' }}>{card.label}</p>
                 <p className="text-[11px] leading-relaxed" style={{ color: 'var(--muted)' }}>{card.sub}</p>
-              </a>
+              </LinkCard>
             ))}
           </div>
         </div>
@@ -603,23 +602,6 @@ function Services() {
         ))}
       </div>
 
-      <div className="mt-12 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        <a
-          href="#contact"
-          onClick={e => { e.preventDefault(); document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' }); }}
-          className="group relative overflow-hidden inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-bold transition-all duration-300"
-          style={{ background: 'var(--foreground)', color: 'var(--background)' }}
-        >
-          <span className="relative z-10 flex items-center gap-2">
-            {t('contactCta')} <ArrowUpRight size={14} />
-          </span>
-          <span
-            className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
-            style={{ background: 'var(--highlight)' }}
-          />
-        </a>
-        <p className="text-xs" style={{ color: 'var(--muted)' }}>{t('note')}</p>
-      </div>
     </section>
   );
 }
@@ -698,7 +680,7 @@ function Community() {
             className="group relative overflow-hidden inline-flex items-center gap-2 mt-10 px-7 py-3.5 rounded-full text-sm font-bold transition-all duration-300"
             style={{ background: 'var(--foreground)', color: 'var(--background)' }}
           >
-            <span className="relative z-10 flex items-center gap-2">
+            <span className="relative z-10 flex items-center gap-2 transition-colors duration-300 group-hover:text-black">
               {t('joinButton')} <ArrowUpRight size={14} />
             </span>
             <span
@@ -710,13 +692,7 @@ function Community() {
 
         {/* Right: cards */}
         <div className="space-y-4 opacity-0">
-          <a
-            href="https://notion.so"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex items-center gap-4 p-5 rounded-3xl transition-all duration-300 hover:-translate-y-1"
-            style={{ background: 'var(--card)', border: '1px solid var(--border)', boxShadow: 'var(--shadow)', backdropFilter: 'blur(8px)' }}
-          >
+          <LinkCard href="https://notion.so" className="flex items-center gap-4 p-5 rounded-3xl">
             <div
               className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
               style={{ background: 'var(--border-strong)' }}
@@ -728,7 +704,7 @@ function Community() {
               <p className="text-xs" style={{ color: 'var(--muted)' }}>{t('notionSub')}</p>
             </div>
             <ExternalLink size={13} className="opacity-30 group-hover:opacity-70 transition-opacity flex-shrink-0" />
-          </a>
+          </LinkCard>
 
           <div
             className="flex items-center gap-4 p-5 rounded-3xl"
@@ -791,14 +767,14 @@ function ContactSocialRow({ Icon, label, val, href, color, external }: {
 }
 
 /* ─── CONTACT ─────────────────────────────────────────────────────── */
+const PRIMARY_CONTACT_LABELS = ['LINE', 'Instagram'];
+
 function Contact() {
   const t = useTranslations('Contact');
   const sectionRef  = useRef<HTMLElement>(null);
   const bigTextRef  = useRef<HTMLHeadingElement>(null);
   const introRef    = useRef<HTMLParagraphElement>(null);
-  const formRef     = useRef<HTMLDivElement>(null);
-  const [form, setForm]     = useState({ name: '', email: '', message: '' });
-  const [status, setStatus] = useState<'idle' | 'sending' | 'done'>('idle');
+  const contentRef  = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -818,8 +794,8 @@ function Contact() {
           }
 
           gsap.fromTo(introRef.current, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.8, delay: 0.4 });
-          gsap.fromTo(formRef.current?.children ?? [], { opacity: 0, y: 30 }, {
-            opacity: 1, y: 0, duration: 0.7, stagger: 0.08, delay: 0.55, ease: 'power3.out',
+          gsap.fromTo(contentRef.current?.children ?? [], { opacity: 0, y: 30 }, {
+            opacity: 1, y: 0, duration: 0.7, stagger: 0.1, delay: 0.55, ease: 'power3.out',
           });
         },
       });
@@ -827,11 +803,8 @@ function Contact() {
     return () => ctx.revert();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus('sending');
-    setTimeout(() => setStatus('done'), 1500);
-  };
+  const primary = SOCIAL_LINKS.filter(s => PRIMARY_CONTACT_LABELS.includes(s.label));
+  const others  = SOCIAL_LINKS.filter(s => !PRIMARY_CONTACT_LABELS.includes(s.label));
 
   return (
     <section id="contact" ref={sectionRef} className="relative px-6 lg:px-12 max-w-7xl mx-auto py-32">
@@ -859,102 +832,43 @@ function Contact() {
         {t('intro1')}<br />{t('intro2')}
       </p>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-        {/* Social links */}
-        <div className="space-y-1">
-          {SOCIAL_LINKS.map(({ icon: Icon, label, val, href, color, external: ext }) => (
-            <ContactSocialRow key={label} Icon={Icon} label={label} val={val} href={href} color={color} external={ext !== false} />
-          ))}
+      <div ref={contentRef} className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        {/* Primary channels */}
+        <div className="opacity-0">
+          <p className="text-[10px] font-mono tracking-widest uppercase mb-4" style={{ color: 'var(--muted-2)' }}>
+            {t('primaryLabel')}
+          </p>
+          <div className="flex flex-col gap-3">
+            {primary.map(({ icon: Icon, label, val, href, color }) => (
+              <LinkCard key={label} href={href} className="flex items-center gap-4 p-5 rounded-3xl">
+                <span
+                  className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 text-white transition-transform duration-300 group-hover:scale-110"
+                  style={{ background: color, boxShadow: `0 4px 16px ${color}40` }}
+                >
+                  <Icon size={20} />
+                </span>
+                <div className="flex-1 min-w-0">
+                  <p className="font-bold text-sm" style={{ color: 'var(--foreground)' }}>{label}</p>
+                  <p className="text-xs" style={{ color: 'var(--muted)' }}>{val}</p>
+                </div>
+                <ArrowUpRight size={16} className="opacity-30 group-hover:opacity-80 transition-opacity flex-shrink-0" style={{ color: 'var(--foreground)' }} />
+              </LinkCard>
+            ))}
+          </div>
+          <p className="text-xs leading-relaxed mt-4" style={{ color: 'var(--muted)' }}>{t('primaryNote')}</p>
         </div>
 
-        {/* Form */}
-        {status === 'done' ? (
-          <div
-            className="flex items-center justify-center rounded-3xl p-12"
-            style={{ background: 'var(--card)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-lg)', backdropFilter: 'blur(12px)' }}
-          >
-            <div className="text-center">
-              <div
-                className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5"
-                style={{ background: 'var(--foreground)' }}
-              >
-                <span style={{ color: 'var(--background)' }} className="text-2xl font-bold">✓</span>
-              </div>
-              <p className="font-bold text-xl mb-2" style={{ color: 'var(--foreground)' }}>{t('successTitle')}</p>
-              <p className="text-sm" style={{ color: 'var(--muted)' }}>{t('successBody')}</p>
-            </div>
+        {/* Other channels */}
+        <div className="opacity-0">
+          <p className="text-[10px] font-mono tracking-widest uppercase mb-4" style={{ color: 'var(--muted-2)' }}>
+            {t('otherLabel')}
+          </p>
+          <div className="space-y-1">
+            {others.map(({ icon: Icon, label, val, href, color, external: ext }) => (
+              <ContactSocialRow key={label} Icon={Icon} label={label} val={val} href={href} color={color} external={ext !== false} />
+            ))}
           </div>
-        ) : (
-          <form onSubmit={handleSubmit}>
-            <div ref={formRef} className="space-y-4">
-              {[
-                { field: 'name', type: 'text', key: 'namePlaceholder' },
-                { field: 'email', type: 'email', key: 'emailPlaceholder' },
-              ].map(({ field, type, key }) => (
-                <div key={field} className="opacity-0">
-                  <input
-                    type={type}
-                    placeholder={t(key as 'namePlaceholder' | 'emailPlaceholder')}
-                    required
-                    value={form[field as keyof typeof form]}
-                    onChange={e => setForm({ ...form, [field]: e.target.value })}
-                    className="w-full px-5 py-4 rounded-2xl text-sm outline-none transition-all duration-200 focus:ring-2 focus:ring-[var(--foreground)] focus:ring-offset-0"
-                    style={{
-                      background: 'var(--card)',
-                      color: 'var(--foreground)',
-                      border: '1px solid var(--border)',
-                      backdropFilter: 'blur(8px)',
-                    }}
-                  />
-                </div>
-              ))}
-              <div className="opacity-0">
-                <textarea
-                  placeholder={t('messagePlaceholder')}
-                  required
-                  rows={5}
-                  value={form.message}
-                  onChange={e => setForm({ ...form, message: e.target.value })}
-                  className="w-full px-5 py-4 rounded-2xl text-sm outline-none transition-all duration-200 resize-none focus:ring-2 focus:ring-[var(--foreground)] focus:ring-offset-0"
-                  style={{
-                    background: 'var(--card)',
-                    color: 'var(--foreground)',
-                    border: '1px solid var(--border)',
-                    backdropFilter: 'blur(8px)',
-                  }}
-                />
-              </div>
-              <div className="opacity-0">
-                <button
-                  type="submit"
-                  disabled={status === 'sending'}
-                  className="group relative overflow-hidden w-full py-4 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 transition-all disabled:opacity-50"
-                  style={{ background: 'var(--foreground)', color: 'var(--background)' }}
-                >
-                  <span className="relative z-10 flex items-center gap-2">
-                    {status === 'sending' ? t('sending') : <><Send size={14} />{t('send')}</>}
-                  </span>
-                  <span
-                    className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                    style={{ background: 'var(--highlight)' }}
-                  />
-                </button>
-              </div>
-              <div className="opacity-0 text-center">
-                <p className="text-xs" style={{ color: 'var(--muted)' }}>
-                  {t('orEmail')}{' '}
-                  <a
-                    href={`mailto:${t('emailAddress')}`}
-                    className="underline underline-offset-2 hover:opacity-70 transition-opacity"
-                    style={{ color: 'var(--foreground)' }}
-                  >
-                    {t('emailAddress')}
-                  </a>
-                </p>
-              </div>
-            </div>
-          </form>
-        )}
+        </div>
       </div>
     </section>
   );
@@ -968,7 +882,7 @@ function Footer() {
       className="px-6 lg:px-12 max-w-7xl mx-auto py-10 flex flex-col sm:flex-row justify-between items-center gap-4"
       style={{ borderTop: '1px solid var(--border)' }}
     >
-      <p className="text-[11px] font-mono" style={{ color: 'var(--muted-2)' }}>{t('copyright')}</p>
+      <p className="text-[11px] font-mono" style={{ color: 'var(--muted-2)' }}>{t('copyright', { year: new Date().getFullYear() })}</p>
       <p className="text-[11px] font-mono" style={{ color: 'var(--muted-2)' }}>{t('builtWith')}</p>
     </footer>
   );
