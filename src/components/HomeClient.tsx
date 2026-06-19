@@ -94,6 +94,24 @@ function splitIntoLineSpans(el: HTMLElement, html: string) {
   return el.querySelectorAll<HTMLElement>('.line-inner');
 }
 
+/* ─── LINK CARD ─────────────────────────────────────────────────── */
+/* Shared anchor-card chrome: external-link handling + card surface + hover.
+   Per-card layout (padding, radius, flex, opacity) is passed via className. */
+function LinkCard({ href, className, children }: { href: string; className?: string; children: React.ReactNode }) {
+  const external = href.startsWith('http');
+  return (
+    <a
+      href={href}
+      target={external ? '_blank' : undefined}
+      rel={external ? 'noopener noreferrer' : undefined}
+      className={`group transition-all duration-300 hover:-translate-y-1 ${className ?? ''}`}
+      style={{ background: 'var(--card)', border: '1px solid var(--border)', boxShadow: 'var(--shadow)', backdropFilter: 'blur(8px)' }}
+    >
+      {children}
+    </a>
+  );
+}
+
 /* ─── HERO ──────────────────────────────────────────────────────── */
 function Hero() {
   const t = useTranslations('Hero');
@@ -413,26 +431,16 @@ function About() {
         {t('highlightsLabel')}
       </p>
       <div ref={highlightsRef} className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-20 pb-16" style={{ borderBottom: '1px solid var(--border)' }}>
-        {highlights.map(h => {
-          const external = h.href.startsWith('http');
-          return (
-            <a
-              key={h.label}
-              href={h.href}
-              target={external ? '_blank' : undefined}
-              rel={external ? 'noopener noreferrer' : undefined}
-              className="group opacity-0 flex flex-col gap-2 p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1"
-              style={{ background: 'var(--card)', border: '1px solid var(--border)', boxShadow: 'var(--shadow)', backdropFilter: 'blur(8px)' }}
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-2xl">{h.emoji}</span>
-                <ArrowUpRight size={14} className="opacity-30 group-hover:opacity-80 transition-opacity" style={{ color: 'var(--foreground)' }} />
-              </div>
-              <p className="font-bold text-sm leading-snug mt-1" style={{ color: 'var(--foreground)' }}>{h.label}</p>
-              <p className="text-xs leading-relaxed" style={{ color: 'var(--muted)' }}>{h.sub}</p>
-            </a>
-          );
-        })}
+        {highlights.map(h => (
+          <LinkCard key={h.label} href={h.href} className="opacity-0 flex flex-col gap-2 p-5 rounded-2xl">
+            <div className="flex items-center justify-between">
+              <span className="text-2xl">{h.emoji}</span>
+              <ArrowUpRight size={14} className="opacity-30 group-hover:opacity-80 transition-opacity" style={{ color: 'var(--foreground)' }} />
+            </div>
+            <p className="font-bold text-sm leading-snug mt-1" style={{ color: 'var(--foreground)' }}>{h.label}</p>
+            <p className="text-xs leading-relaxed" style={{ color: 'var(--muted)' }}>{h.sub}</p>
+          </LinkCard>
+        ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
@@ -476,21 +484,14 @@ function About() {
           {/* Notion cards */}
           <div ref={notionRef} className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
             {notionCards.map(card => (
-              <a
-                key={card.label}
-                href={card.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative flex flex-col gap-2 p-4 rounded-2xl opacity-0 transition-all duration-300 hover:-translate-y-1"
-                style={{ background: 'var(--card)', border: '1px solid var(--border)', boxShadow: 'var(--shadow)', backdropFilter: 'blur(8px)' }}
-              >
+              <LinkCard key={card.label} href={card.href} className="relative flex flex-col gap-2 p-4 rounded-2xl opacity-0">
                 <div className="absolute top-3 right-3 w-6 h-6 flex items-center justify-center opacity-30 group-hover:opacity-70 transition-opacity">
                   <SiNotion size={16} style={{ color: 'var(--foreground)' }} />
                 </div>
                 <span className="text-xl">{card.emoji}</span>
                 <p className="text-xs font-semibold leading-snug pr-6" style={{ color: 'var(--foreground)' }}>{card.label}</p>
                 <p className="text-[11px] leading-relaxed" style={{ color: 'var(--muted)' }}>{card.sub}</p>
-              </a>
+              </LinkCard>
             ))}
           </div>
         </div>
@@ -691,13 +692,7 @@ function Community() {
 
         {/* Right: cards */}
         <div className="space-y-4 opacity-0">
-          <a
-            href="https://notion.so"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex items-center gap-4 p-5 rounded-3xl transition-all duration-300 hover:-translate-y-1"
-            style={{ background: 'var(--card)', border: '1px solid var(--border)', boxShadow: 'var(--shadow)', backdropFilter: 'blur(8px)' }}
-          >
+          <LinkCard href="https://notion.so" className="flex items-center gap-4 p-5 rounded-3xl">
             <div
               className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
               style={{ background: 'var(--border-strong)' }}
@@ -709,7 +704,7 @@ function Community() {
               <p className="text-xs" style={{ color: 'var(--muted)' }}>{t('notionSub')}</p>
             </div>
             <ExternalLink size={13} className="opacity-30 group-hover:opacity-70 transition-opacity flex-shrink-0" />
-          </a>
+          </LinkCard>
 
           <div
             className="flex items-center gap-4 p-5 rounded-3xl"
@@ -845,14 +840,7 @@ function Contact() {
           </p>
           <div className="flex flex-col gap-3">
             {primary.map(({ icon: Icon, label, val, href, color }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-4 p-5 rounded-3xl transition-all duration-300 hover:-translate-y-1"
-                style={{ background: 'var(--card)', border: '1px solid var(--border)', boxShadow: 'var(--shadow)', backdropFilter: 'blur(8px)' }}
-              >
+              <LinkCard key={label} href={href} className="flex items-center gap-4 p-5 rounded-3xl">
                 <span
                   className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 text-white transition-transform duration-300 group-hover:scale-110"
                   style={{ background: color, boxShadow: `0 4px 16px ${color}40` }}
@@ -864,7 +852,7 @@ function Contact() {
                   <p className="text-xs" style={{ color: 'var(--muted)' }}>{val}</p>
                 </div>
                 <ArrowUpRight size={16} className="opacity-30 group-hover:opacity-80 transition-opacity flex-shrink-0" style={{ color: 'var(--foreground)' }} />
-              </a>
+              </LinkCard>
             ))}
           </div>
           <p className="text-xs leading-relaxed mt-4" style={{ color: 'var(--muted)' }}>{t('primaryNote')}</p>
