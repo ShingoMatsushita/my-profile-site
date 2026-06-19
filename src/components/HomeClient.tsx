@@ -349,7 +349,7 @@ function About() {
   const sectionRef  = useRef<HTMLElement>(null);
   const labelRef    = useRef<HTMLDivElement>(null);
   const headRef     = useRef<HTMLHeadingElement>(null);
-  const statsRef    = useRef<HTMLDivElement>(null);
+  const highlightsRef    = useRef<HTMLDivElement>(null);
   const textRef     = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
   const skillsRef   = useRef<HTMLDivElement>(null);
@@ -378,8 +378,8 @@ function About() {
           }
 
           /* Highlight cards */
-          if (statsRef.current) {
-            gsap.fromTo(statsRef.current.children, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, delay: 0.15, ease: 'power3.out' });
+          if (highlightsRef.current) {
+            gsap.fromTo(highlightsRef.current.children, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, delay: 0.15, ease: 'power3.out' });
           }
 
           gsap.fromTo(textRef.current?.children ?? [], base, { ...to, stagger: 0.1, delay: 0.2 });
@@ -412,7 +412,7 @@ function About() {
       <p className="text-[10px] font-mono tracking-widest uppercase mb-4" style={{ color: 'var(--muted-2)' }}>
         {t('highlightsLabel')}
       </p>
-      <div ref={statsRef} className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-20 pb-16" style={{ borderBottom: '1px solid var(--border)' }}>
+      <div ref={highlightsRef} className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-20 pb-16" style={{ borderBottom: '1px solid var(--border)' }}>
         {highlights.map(h => {
           const external = h.href.startsWith('http');
           return (
