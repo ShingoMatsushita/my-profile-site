@@ -208,7 +208,7 @@ function Hero() {
                   className="group relative overflow-hidden inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-bold transition-all duration-300"
                   style={{ background: 'var(--foreground)', color: 'var(--background)' }}
                 >
-                  <span className="relative z-10 flex items-center gap-2">
+                  <span className="relative z-10 flex items-center gap-2 transition-colors duration-300 group-hover:text-black">
                     {t('cta')} <ArrowUpRight size={14} />
                   </span>
                   <span
@@ -679,7 +679,7 @@ function Community() {
             className="group relative overflow-hidden inline-flex items-center gap-2 mt-10 px-7 py-3.5 rounded-full text-sm font-bold transition-all duration-300"
             style={{ background: 'var(--foreground)', color: 'var(--background)' }}
           >
-            <span className="relative z-10 flex items-center gap-2">
+            <span className="relative z-10 flex items-center gap-2 transition-colors duration-300 group-hover:text-black">
               {t('joinButton')} <ArrowUpRight size={14} />
             </span>
             <span
